@@ -29,8 +29,7 @@ def run():
             except Exception as error:
                 print("Error:", error)
                 return
-        else:
-            dataset = data.getData(ticker)
+        dataset = data.getData(ticker)
         print("\n[Results]")
         print(f"Ticker: {ticker}")
         print("Data received.")
