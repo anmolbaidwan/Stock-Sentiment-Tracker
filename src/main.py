@@ -3,6 +3,7 @@ import pprint
 from api_client import AlphaVantageClient
 from build import buildDataset
 from tickerData import TickerData
+from linearModel import graph
 
 def run():
     print("--- Stock Sentiment & Valuation Tracker ---")
@@ -23,11 +24,10 @@ def run():
             return
     else:
         dataset = data.getData(ticker)
-        pass
     print("\n[Results]")
     print(f"Ticker: {ticker}")
     print("Data received.")
     pprint.pprint(dataset)
-
+    graph(dataset)
 if __name__ == "__main__":
     run()

@@ -11,7 +11,7 @@ class AlphaVantageClient:
     def __init__(self):
         self.api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
         self.base_url = "https://www.alphavantage.co/query"
-        past = datetime.now() + relativedelta(months=-6) #set search date to 6 months ago
+        past = datetime.now() + relativedelta(months=-3) #set search date to 3 months ago
         self.searchDate = past.strftime('%Y%m%d') + "T0000"
 
         
@@ -40,8 +40,11 @@ class AlphaVantageClient:
         
 
     def get_sentiment(self, symbol):
-        params = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "limit":1000}
-        feed = self.call_api(params, "sentiment")
+        newparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "limit":1000}
+        oldparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "sort": "EARLIEST", "limit":1000}
+        newfeed = self.call_api(newparams, "sentiment")
+        oldfeed = self.call_api(oldparams, "sentiment")
+        feed = oldfeed + newfeed
         weighted_sentiment = 0
         data = {}
         for article in feed: #for each news article
@@ -49,7 +52,7 @@ class AlphaVantageClient:
             formatDate = date.strftime("%Y-%m-%d") #get formatted time for consistency
             for t in article['ticker_sentiment']: #for each ticker in the article
                 if t['ticker'] == symbol and float(t['relevance_score']) >= 0.3: #if correct ticker and relevant enough
-                    weighted_sentiment = float(t['relevance_score']) * float(t['ticker_sentiment_score'])
+                    weighted_sentiment = float(t['ticker_sentiment_score'])
                     if formatDate not in data: #create a list if it doesnt exist
                         data[formatDate] = [weighted_sentiment]
                     else:

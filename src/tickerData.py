@@ -26,6 +26,19 @@ class TickerData:
             json.dump(dataset, file, indent=4)
         self.updateIndex(dataset, ticker)
 
+    # def dateOffset(old, new) -> int:
+    #     offset = 0
+    #     while(old[offset]["date"] != new[0]["date"] and offset < len(old)):
+    #         offset += 1
+    #     return offset
+    
+    # # def updateData(self, newdata, ticker):
+    # #     olddata = self.getData(ticker)
+    # #     offset = self.dateOffset(olddata, newdata)
+    # #     for i in range(len(olddata)):
+
+        
+
     def getData(self, ticker) -> list: #return the dataset of the corresponding ticker
         dataset = []
         fname = f"{ticker}_data.json"
