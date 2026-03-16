@@ -36,8 +36,8 @@ class TickerData:
         self.storeData(olddata, ticker)
 
     
-    def getData(self, ticker) -> list: #return the dataset of the corresponding ticker
-        dataset = []
+    def getData(self, ticker) -> dict: #return the dataset of the corresponding ticker
+        dataset = {}
         if ticker in self.index:
             fname = f"{ticker}_data.json"
             filepath = self.directory / fname
@@ -50,7 +50,7 @@ class TickerData:
         return dataset
     
     def getDate(self, dataset) -> str: #find most recent date in the dataset
-        return dataset[len(dataset)-1]["date"]
+        return dataset[len(dataset)-1]
 
     def updateIndex(self, dataset ,ticker):
         self.index[ticker] = self.getDate(dataset)

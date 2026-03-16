@@ -1,5 +1,4 @@
 import sys
-import pprint
 from api_client import AlphaVantageClient
 from build import buildDataset
 from tickerData import TickerData
@@ -33,7 +32,6 @@ def run():
         print("\n[Results]")
         print(f"Ticker: {ticker}")
         print("Data received.")
-        # pprint.pprint(dataset)
         graph(dataset)
         loop = input("Would you like to process new data? (y/n)").upper()
 if __name__ == "__main__":
