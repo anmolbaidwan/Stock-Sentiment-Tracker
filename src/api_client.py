@@ -52,7 +52,7 @@ class AlphaVantageClient:
             formatDate = date.strftime("%Y-%m-%d") #get formatted time for consistency
             for t in article['ticker_sentiment']: #for each ticker in the article
                 if t['ticker'] == symbol and float(t['relevance_score']) >= 0.3: #if correct ticker and relevant enough
-                    weighted_sentiment = float(t['ticker_sentiment_score'])
+                    weighted_sentiment = float(t['ticker_sentiment_score']) * float(t['relevance_score'])
                     if formatDate not in data: #create a list if it doesnt exist
                         data[formatDate] = [weighted_sentiment]
                     else:
