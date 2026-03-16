@@ -29,3 +29,4 @@ def buildDataset(price_dict, sentiment_dict, ticker):
         dataset[-1]["next_return"] = None
 
     return dataset
+
