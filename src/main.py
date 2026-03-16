@@ -9,6 +9,11 @@ def run():
     print("--- Stock Sentiment & Valuation Tracker ---")
     data = TickerData()
     dataset = []
+
+    #while True:
+    #    ticker = input("Enter a stock ticker (e.g., AAPL): ").upper()
+    #    dataset = data.getData(ticker)
+    #    graph(dataset)
     loop = ""
     while(loop != "N"):
         ticker = input("Enter a stock ticker (e.g., AAPL): ").upper()

@@ -20,9 +20,12 @@ def graph(dataset):
     plt.plot(x, m*x + b)
     plt.xlabel("Sentiment Score")
     plt.ylabel("Next Day Return")
-    print(m)
-    plt.show()
 
+    corr = np.corrcoef(x, y)[0,1]
+    if corr > 0.15 or corr < -0.15:
+        print("Correlation HAS AN EFFECT: ", corr)
+    else:
+        print("No Correlation")
 # if slope is greater than 0.1, then there is somewhat of an effect by sentiment on that stock
 # we can either go for a machine learning approach or we can just do slope times stock close price to predict next day
 

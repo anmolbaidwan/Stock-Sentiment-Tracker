@@ -14,7 +14,7 @@ def buildDataset(price_dict, sentiment_dict, ticker):
 
         daily_return = (today_price-yesterday_price)/yesterday_price #get daily return
 
-        sentiment = sentiment_dict.get(today, 0) #if sentiment doesnt exist for that day, set to 0 for now
+        sentiment = sentiment_dict.get(today, 0) - sentiment_dict.get(yesterday, 0) #if sentiment doesnt exist for that day, set to 0 for now
 
         dataset.append({ #add a dict with these values
             "date": today,
