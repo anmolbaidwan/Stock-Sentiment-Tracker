@@ -41,10 +41,14 @@ class TickerData:
 
     def getData(self, ticker) -> list: #return the dataset of the corresponding ticker
         dataset = []
-        fname = f"{ticker}_data.json"
-        filepath = self.directory / fname
-        with open(filepath,"r") as file:
-            dataset = json.load(file)
+        if ticker in self.index:
+            fname = f"{ticker}_data.json"
+            filepath = self.directory / fname
+            with open(filepath,"r") as file:
+                print(f"Fetching data for {ticker} from {self.index[ticker]} ...")
+                dataset = json.load(file)
+        else:
+            print(f"Error no cached data for {ticker}")
         return dataset
     
     def getDate(self, dataset) -> str: #find most recent date in the dataset
