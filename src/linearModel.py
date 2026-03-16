@@ -5,7 +5,7 @@ def graph(dataset):
     x = []
     y = []
 
-    for d in dataset:
+    for d in dataset.values():
         if d['next_return'] is None or d['sentiment'] == 0:
             continue
         x.append(d['sentiment'])

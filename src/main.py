@@ -8,7 +8,7 @@ from linearModel import graph
 def run():
     print("--- Stock Sentiment & Valuation Tracker ---")
     data = TickerData()
-    dataset = []
+    dataset = {}
 
     #while True:
     #    ticker = input("Enter a stock ticker (e.g., AAPL): ").upper()
@@ -25,7 +25,7 @@ def run():
                 price_data = client.get_stock_price(ticker)
                 sentiment_data = client.get_sentiment(ticker)
                 dataset = buildDataset(price_data, sentiment_data, ticker)
-                data.storeData(dataset, ticker)
+                data.updateData(dataset, ticker)
             except Exception as error:
                 print("Error:", error)
                 return

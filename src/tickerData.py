@@ -26,19 +26,16 @@ class TickerData:
             json.dump(dataset, file, indent=4)
         self.updateIndex(dataset, ticker)
 
-    # def dateOffset(old, new) -> int:
-    #     offset = 0
-    #     while(old[offset]["date"] != new[0]["date"] and offset < len(old)):
-    #         offset += 1
-    #     return offset
+    def updateData(self, newdata, ticker):
+        olddata = self.getData(ticker)
+        if not olddata:
+            self.storeData(newdata, ticker)
+            return
+        for date, d in newdata.items():
+            olddata[date] = newdata[d]
+        self.storeData(olddata, ticker)
+
     
-    # # def updateData(self, newdata, ticker):
-    # #     olddata = self.getData(ticker)
-    # #     offset = self.dateOffset(olddata, newdata)
-    # #     for i in range(len(olddata)):
-
-        
-
     def getData(self, ticker) -> list: #return the dataset of the corresponding ticker
         dataset = []
         if ticker in self.index:
@@ -49,6 +46,7 @@ class TickerData:
                 dataset = json.load(file)
         else:
             print(f"Error no cached data for {ticker}")
+            return None
         return dataset
     
     def getDate(self, dataset) -> str: #find most recent date in the dataset
