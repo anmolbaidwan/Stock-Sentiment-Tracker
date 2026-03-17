@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from tickerAnalysis import analyze
 
 class TickerData:
     def __init__(self):
@@ -51,7 +52,7 @@ class TickerData:
             fname = f"{ticker}_data.json"
             filepath = self.directory / fname
             with open(filepath,"r") as file:
-                print(f"Fetching data for {ticker} from {self.index[ticker]} ...")
+                print(f"Fetching data for {ticker} from {self.index[ticker]["from"]} ...")
                 dataset = json.load(file)
         else:
             print(f"Error no cached data for {ticker}")
@@ -62,8 +63,18 @@ class TickerData:
         return max(dataset.keys())
 
     def updateIndex(self, dataset ,ticker):
-        self.index[ticker] = self.getDate(dataset)
+        self.index[ticker] = {'from' : self.getDate(dataset),
+                             'signal' : analyze(dataset)}
         fname = "index.json"
         filepath = self.directory / fname
         with open(filepath,"w") as file:
             json.dump(self.index, file, indent=4)
+
+    def signalMessage(self, ticker):
+        corr = self.index[ticker]["signal"]
+        if abs(corr) > 0.2:
+            print("Strong signal:", corr)
+        elif abs(corr) > 0.1:
+            print("Weak Signal:", corr)
+        else:
+            print("Signal likely noise:", corr)

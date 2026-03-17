@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def graph(dataset):
+def analyze(dataset):
     x = []
     y = []
 
@@ -21,13 +21,9 @@ def graph(dataset):
     plt.xlabel("Sentiment Score")
     plt.ylabel("Next Day Return")
     
-    print("Data Points:", len(x))
+    # print("Data Points:", len(x))
 
     corr = np.corrcoef(x, y)[0,1]
-    if abs(corr) > 0.2:
-        print("Strong signal:", corr)
-    elif abs(corr) > 0.1:
-        print("Weak Signal:", corr)
-    else:
-        print("Signal likely noise:", corr)
-
+   
+    # plt.show()
+    return corr
