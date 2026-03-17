@@ -30,9 +30,10 @@ class TickerData:
         olddata = self.getData(ticker)
         if not olddata:
             self.storeData(newdata, ticker)
-            return newdata
-        olddata.update(newdata)
-        self.storeData(olddata, ticker)
+            olddata = newdata
+        else:
+            olddata.update(newdata)
+            self.storeData(olddata, ticker)
         return olddata
 
     def appendData(self, newdata, ticker): #Checks if dataset exists in a json file and appends any new entries from the new dataset if exists
@@ -54,7 +55,6 @@ class TickerData:
                 print(f"Fetching data for {ticker} from {self.index[ticker]} ...")
                 dataset = json.load(file)
         else:
-            print(f"Error no cached data for {ticker}")
             return None
         return dataset
     

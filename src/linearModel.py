@@ -6,10 +6,9 @@ def graph(dataset):
     y = []
 
     for d in dataset.values():
-        if d['next_return'] is None or abs(d['sentiment']) < 0.05:
-            continue
-        x.append(d['sentiment'])
-        y.append(d['next_return'])
+        if d['next_return'] and abs(d['sentiment']) > 0.05:
+            x.append(d['sentiment'])
+            y.append(d['next_return'])
 
     x = np.array(x)
     y = np.array(y)

@@ -36,10 +36,14 @@ def run():
                 return
         else:
             dataset = data.getData(ticker)
+            if not dataset:
+                print(f"Error no cached data for {ticker}")
+
         print("\n[Results]")
         print(f"Ticker: {ticker}")
         print("Data received.")
         graph(dataset)
         loop = input("Would you like to process new data? (y/n)").upper()
+        
 if __name__ == "__main__":
     run()

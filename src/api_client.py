@@ -24,10 +24,11 @@ class AlphaVantageClient:
 
         if 'Information' in response:
             raise RuntimeError("API Limit Reached")
-        
         if type == 'sentiment':
-            return response['feed']
-        return response["Time Series (Daily)"]
+            data =  response['feed']
+        else: 
+            data = response["Time Series (Daily)"]
+        return data
         
 
     def get_stock_price(self, symbol):
