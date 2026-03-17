@@ -19,6 +19,13 @@ class TickerData:
             with open(filepath,"w") as file:
                 json.dump(index, file, indent=4)
         return index
+    
+    def printCachedTickers(self):
+        print("\n---[Cached Tickers]---")
+        indexByDate = sorted(self.index.items(), key=lambda x: x[1]["from"],reverse=True)
+        for symbol, data in indexByDate:
+            print(f"|{symbol}"+" "*(10-len(symbol))+ f"{data["from"]}|")
+        print("----------------------")
 
     def storeData(self, dataset, ticker): #store the dataset in a json file
         fname = f"{ticker}_data.json"

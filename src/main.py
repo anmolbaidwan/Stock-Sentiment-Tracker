@@ -7,6 +7,7 @@ def run():
     print("--- Stock Sentiment & Valuation Tracker ---")
     tickerData = TickerData()
     client = AlphaVantageClient()
+    tickerData.printCachedTickers()
     # dataset = {}
     loop = ""
     while(loop != "N"):
