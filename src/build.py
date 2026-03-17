@@ -21,10 +21,10 @@ def buildDataset(price_dict, sentiment_dict, ticker):
             "sentiment": sentiment,
             "return": daily_return,
         }
-
-        for i in range(len(dataset) - 1): #afterwards, add a next_return which is just tomorrows return
-            dataset[i]["next_return"] = dataset[i + 1]["return"]
-
+        for i in range(len(dates)-1): #afterwards, add a next_return which is just tomorrows return
+            today = dates[i]
+            tomorrow = dates[i+1]
+            dataset[today]["next_return"] = dataset[tomorrow]["return"]
         dataset[-1]["next_return"] = None
 
     return dataset

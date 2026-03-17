@@ -23,6 +23,7 @@ class AlphaVantageClient:
             raise ValueError("Invalid Ticker Provided")
 
         if 'Information' in response:
+            print(response)
             raise RuntimeError("API Limit Reached")
         
         if type == 'sentiment':
@@ -31,11 +32,11 @@ class AlphaVantageClient:
         
 
     def get_stock_price(self, symbol):
-        params = {"function": "TIME_SERIES_DAILY_ADJUSTED", "symbol": symbol, "outputsize":"compact", "apikey": self.api_key}
+        params = {"function": "TIME_SERIES_DAILY", "symbol": symbol, "outputsize":"compact", "apikey": self.api_key}
         prices = self.call_api(params, "stock")
         data = {}
         for date, info in prices.items():
-            data[date] = float(info['5. adjusted close'])
+            data[date] = float(info['4. close'])
         return data
         
 
