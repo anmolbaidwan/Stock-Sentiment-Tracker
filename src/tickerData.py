@@ -26,7 +26,7 @@ class TickerData:
             json.dump(dataset, file, indent=4)
         self.updateIndex(dataset, ticker)
 
-    def updateData(self, newdata, ticker):
+    def updateData(self, newdata, ticker): 
         olddata = self.getData(ticker)
         if not olddata:
             self.storeData(newdata, ticker)
@@ -35,6 +35,15 @@ class TickerData:
         self.storeData(olddata, ticker)
         return olddata
 
+    def appendData(self, newdata, ticker): #Checks if dataset exists in a json file and appends any new entries from the new dataset if exists
+        data = newdata
+        if ticker in self.index:
+            data = self.getData(ticker)
+            for k, v in newdata.items():
+                if k not in data:
+                    data.update({k:v})
+        self.storeData(data, ticker)
+        return data
     
     def getData(self, ticker) -> dict: #return the dataset of the corresponding ticker
         dataset = {}

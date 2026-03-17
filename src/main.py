@@ -24,7 +24,13 @@ def run():
                 price_data = client.get_stock_price(ticker)
                 sentiment_data = client.get_sentiment(ticker)
                 build = buildDataset(price_data, sentiment_data, ticker)
-                dataset = data.updateData(build, ticker)
+                upOrAppend = input("Replace or Append entries to JSON? (U/R):").upper()
+                if upOrAppend == 'R':
+                    print("Replacing entries in JSON...")
+                    dataset = data.updateData(build, ticker)
+                else:
+                    print("Appending entries to JSON...")
+                    dataset = data.appendData(build, ticker)
             except Exception as error:
                 print("Error:", error)
                 return
