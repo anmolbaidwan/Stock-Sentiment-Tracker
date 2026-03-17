@@ -30,10 +30,10 @@ class TickerData:
         olddata = self.getData(ticker)
         if not olddata:
             self.storeData(newdata, ticker)
-            return
-        for date, d in newdata.items():
-            olddata[date] = newdata[d]
+            return newdata
+        olddata.update(newdata)
         self.storeData(olddata, ticker)
+        return olddata
 
     
     def getData(self, ticker) -> dict: #return the dataset of the corresponding ticker
@@ -50,7 +50,7 @@ class TickerData:
         return dataset
     
     def getDate(self, dataset) -> str: #find most recent date in the dataset
-        return dataset[len(dataset)-1]
+        return max(dataset.keys())
 
     def updateIndex(self, dataset ,ticker):
         self.index[ticker] = self.getDate(dataset)

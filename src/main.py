@@ -7,6 +7,7 @@ from linearModel import graph
 def run():
     print("--- Stock Sentiment & Valuation Tracker ---")
     data = TickerData()
+    client = AlphaVantageClient()
     dataset = {}
 
     #while True:
@@ -19,16 +20,16 @@ def run():
         fetchNew = input("Would you like to update data for this ticker? (y/n): ").upper()
         if fetchNew == "Y":
             try:
-                client = AlphaVantageClient()
                 print(f"Fetching data for {ticker}...")
                 price_data = client.get_stock_price(ticker)
                 sentiment_data = client.get_sentiment(ticker)
-                dataset = buildDataset(price_data, sentiment_data, ticker)
-                data.updateData(dataset, ticker)
+                build = buildDataset(price_data, sentiment_data, ticker)
+                dataset = data.updateData(build, ticker)
             except Exception as error:
                 print("Error:", error)
                 return
-        dataset = data.getData(ticker)
+        else:
+            dataset = data.getData(ticker)
         print("\n[Results]")
         print(f"Ticker: {ticker}")
         print("Data received.")

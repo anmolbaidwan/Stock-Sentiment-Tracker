@@ -23,7 +23,6 @@ class AlphaVantageClient:
             raise ValueError("Invalid Ticker Provided")
 
         if 'Information' in response:
-            print(response)
             raise RuntimeError("API Limit Reached")
         
         if type == 'sentiment':
