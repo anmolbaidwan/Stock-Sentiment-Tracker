@@ -5,8 +5,8 @@ def graph(dataset):
     x = []
     y = []
 
-    for d in dataset:
-        if d['next_return'] is None or d['sentiment'] == 0:
+    for d in dataset.values():
+        if d['next_return'] is None or abs(d['sentiment']) < 0.05:
             continue
         x.append(d['sentiment'])
         y.append(d['next_return'])
@@ -14,18 +14,20 @@ def graph(dataset):
     x = np.array(x)
     y = np.array(y)
 
+    #This chunk below is only needed for viewing visual graph
     plt.scatter(x, y)
-
     m, b = np.polyfit(x, y, 1)
     plt.plot(x, m*x + b)
     plt.xlabel("Sentiment Score")
     plt.ylabel("Next Day Return")
+    
+    print("Data Points:", len(x))
 
     corr = np.corrcoef(x, y)[0,1]
-    if corr > 0.15 or corr < -0.15:
-        print("Correlation HAS AN EFFECT: ", corr)
+    if abs(corr) > 0.2:
+        print("Strong signal:", corr)
+    elif abs(corr) > 0.1:
+        print("Weak Signal:", corr)
     else:
-        print("No Correlation")
-# if slope is greater than 0.1, then there is somewhat of an effect by sentiment on that stock
-# we can either go for a machine learning approach or we can just do slope times stock close price to predict next day
+        print("Signal likely noise:", corr)
 

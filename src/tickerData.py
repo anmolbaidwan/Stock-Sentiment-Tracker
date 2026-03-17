@@ -26,21 +26,27 @@ class TickerData:
             json.dump(dataset, file, indent=4)
         self.updateIndex(dataset, ticker)
 
-    # def dateOffset(old, new) -> int:
-    #     offset = 0
-    #     while(old[offset]["date"] != new[0]["date"] and offset < len(old)):
-    #         offset += 1
-    #     return offset
+    def updateData(self, newdata, ticker): 
+        olddata = self.getData(ticker)
+        if not olddata:
+            self.storeData(newdata, ticker)
+            return newdata
+        olddata.update(newdata)
+        self.storeData(olddata, ticker)
+        return olddata
+
+    def appendData(self, newdata, ticker): #Checks if dataset exists in a json file and appends any new entries from the new dataset if exists
+        data = newdata
+        if ticker in self.index:
+            data = self.getData(ticker)
+            for k, v in newdata.items():
+                if k not in data:
+                    data.update({k:v})
+        self.storeData(data, ticker)
+        return data
     
-    # # def updateData(self, newdata, ticker):
-    # #     olddata = self.getData(ticker)
-    # #     offset = self.dateOffset(olddata, newdata)
-    # #     for i in range(len(olddata)):
-
-        
-
-    def getData(self, ticker) -> list: #return the dataset of the corresponding ticker
-        dataset = []
+    def getData(self, ticker) -> dict: #return the dataset of the corresponding ticker
+        dataset = {}
         if ticker in self.index:
             fname = f"{ticker}_data.json"
             filepath = self.directory / fname
@@ -49,10 +55,11 @@ class TickerData:
                 dataset = json.load(file)
         else:
             print(f"Error no cached data for {ticker}")
+            return None
         return dataset
     
     def getDate(self, dataset) -> str: #find most recent date in the dataset
-        return dataset[len(dataset)-1]["date"]
+        return max(dataset.keys())
 
     def updateIndex(self, dataset ,ticker):
         self.index[ticker] = self.getDate(dataset)
