@@ -10,6 +10,7 @@ body {
     font-family: monospace;
     background: #0a0a0a;
     color: #e5e5e5;
+    font-size: large;
 }
 
 .nav {
@@ -25,6 +26,15 @@ body {
     border: 1px solid #0f0;
     padding: 6px 12px;
     cursor: pointer;
+}
+
+.bigbtn {
+    background: #111;
+    color: #0f0;
+    border: 1px solid #0f0;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: small;
 }
 
 .center {
@@ -59,6 +69,12 @@ input {
     animation: move 6s linear infinite;
 }
 
+a {
+    color: #0f0;
+    text-decoration: none;
+    font-size: 12px;
+}
+
 @keyframes move {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(250%); }
@@ -76,21 +92,28 @@ input {
 <body>
 
 <div class="nav">
-    <div>Stocks</div>
+    <div><a href = '/'>Quetan Inc</a></div>
     <div>
-        <button class="btn" onclick="location.href='/login'">Login</button>
-        <button class="btn" onclick="location.href='/signup'">Sign Up</button>
+        {% if user %}
+            <span>> {{ user }}</span>
+            <button class="btn" onclick="location.href='/logout'">Logout</button>
+        {% else %}
+            <button class="btn" onclick="location.href='/login'">Login</button>
+        {% endif %}
     </div>
 </div>
 
 <div class="center">
     <div>> Stock Sentiment Analyzer</div>
 
+    {% if user %}
     <form method="POST" onsubmit="showLoad()">
         <input name="ticker" placeholder="AAPL / TSLA..." required />
         <button class="btn" type="submit">Run</button>
     </form>
-
+    {% else %}
+    <button class="bigbtn" onclick="location.href='/signup'">Sign Up</button>
+    {% endif %}
     <div class="load" id="load">
         <div class="bar"></div>
     </div>
@@ -100,9 +123,9 @@ input {
             {% if result.error %}
                 <div class="error">{{ result.error }}</div>
             {% else %}
-                <div>Results for Ticker:{{ result.ticker }}</div>
-                <div>Closing Price:${{ result.price }}</div>
-                <div>Overall Market Sentiment for {{ result.ticker }}:{{ result.sentiment }}</div>
+                <div>Results for Ticker: {{ result.ticker }}</div>
+                <div>Closing Price: ${{ result.price }}</div>
+                <div>Overall Market Sentiment for {{ result.ticker }}: {{ result.sentiment }}</div>
                 <div>Our Prediction Signal reads the correlation between Prices and Sentiment is {{ result.message }}</div>
             {% endif %}
         </div>
