@@ -21,7 +21,7 @@ class AlphaVantageClient:
         response = requests.get(self.base_url, params=params).json()
         time.sleep(1.1) 
         if 'Error Message' in response:
-            raise ValueError("Invalid Ticker Provided")
+            raise ValueError("Ticker Not Found")
 
         if 'Information' in response:
             raise RuntimeError("API Limit Reached")
@@ -34,12 +34,15 @@ class AlphaVantageClient:
     def get_stock_price(self, symbol):
         data = {}
         ticker = yf.Ticker(symbol)
-        priceHistory = ticker.history(period = '3mo', rounding = True)
-        priceHistory = priceHistory.reset_index()
-        priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
-        priceHistory = priceHistory.to_dict('records')
-        for record in reversed(priceHistory):
-            data[record['Date']] = record['Close']
+        try:
+            priceHistory = ticker.history(period = '3mo', rounding = True)
+            priceHistory = priceHistory.reset_index()
+            priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
+            priceHistory = priceHistory.to_dict('records')
+            for record in reversed(priceHistory):
+                data[record['Date']] = record['Close']
+        except Exception as error:
+            raise ValueError("Ticker Not Found")
         return data
         
 
