@@ -604,5 +604,11 @@
         "sentiment": -0.079361662761,
         "return": 0.01921434671221175,
         "next_return": null
+    },
+    "2026-03-18": {
+        "price": 11.94,
+        "sentiment": -0.14203151880857143,
+        "return": 0.0,
+        "next_return": null
     }
 }

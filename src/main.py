@@ -39,7 +39,8 @@ if __name__ == "__main__":
                 print(f"Fetching data for {ticker}...")
                 price_data = client.get_stock_price(ticker)
                 sentiment_data = client.get_sentiment(ticker)
-                build = buildDataset(price_data, sentiment_data, ticker)
+                recommendation_data = client.get_recommend_scores(ticker)
+                build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
                 upOrAppend = input("Replace or Append entries to JSON? (R/A):").upper()
                 if upOrAppend == 'R':
                     print("Replacing entries in JSON...")

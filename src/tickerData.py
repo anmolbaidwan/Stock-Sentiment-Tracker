@@ -67,7 +67,8 @@ class TickerData:
         self.index[ticker] = {'from' : date,
                              'signal' : analyze(dataset),
                              'close' : dataset[date]["price"],
-                             'sentiment': dataset[date]["sentiment"]}
+                             'sentiment': dataset[date]["sentiment"],
+                             'recommendation': dataset[date]["recommendation"]}
         fname = "index.json"
         filepath = self.directory / fname
         with open(filepath,"w") as file:
@@ -115,6 +116,9 @@ class TickerData:
     
     def getPrice(self, ticker):
         return self.index[ticker]["close"]
+    
+    def getRecScore(self, ticker):
+        return self.index[ticker].get("recommendation")
 
     def printCachedTickers(self):
         print("\n---[Cached Tickers]---")

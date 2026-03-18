@@ -34,14 +34,34 @@ class AlphaVantageClient:
     def get_stock_price(self, symbol):
         data = {}
         ticker = yf.Ticker(symbol)
-        priceHistory = ticker.history(period = '3mo', rounding = True)
+        priceHistory = ticker.history(period = '3mo', rounding = True, timeout = None)
         priceHistory = priceHistory.reset_index()
         priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
         priceHistory = priceHistory.to_dict('records')
         for record in reversed(priceHistory):
             data[record['Date']] = record['Close']
         return data
-        
+    
+
+    def get_recommend_scores(self, symbol): #returns a recommendation score between 1 to -1, 1 = strong buy, 0.5 = buy, 0 = hold, -0.5 = sell, -1 = strong sell
+        data = {}
+        ticker = yf.Ticker(symbol)
+        rec = ticker.get_recommendations()
+        rec = rec.to_dict("records")
+        for entry in rec:
+            score = ((1*entry['strongBuy']) + (0.5*entry['buy']) + (0*entry['hold']) + (-0.5*entry['sell']) + (-1*entry['strongSell'])) / ((entry['strongBuy']) + (entry['buy']) + (entry['hold']) + (entry['sell']) + (entry['strongSell']))
+            period = entry["period"]
+            if period == '0m':
+                date = datetime.now()
+            elif period =='-1m':
+                date = datetime.now() + relativedelta(months=-1)
+            elif period =='-2m':
+                date = datetime.now() + relativedelta(months=-2)
+            elif period =='-3m':
+                date = datetime.now() + relativedelta(months=-3)
+            date = date.strftime("%Y-%m")
+            data[str(date)] = score
+        return data
 
     def get_sentiment(self, symbol):
         newparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "limit":1000}
