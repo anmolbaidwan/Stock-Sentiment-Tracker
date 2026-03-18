@@ -19,13 +19,6 @@ class TickerData:
             with open(filepath,"w") as file:
                 json.dump(index, file, indent=4)
         return index
-    
-    def printCachedTickers(self):
-        print("\n---[Cached Tickers]---")
-        indexByDate = sorted(self.index.items(), key=lambda x: x[1]["from"],reverse=True)
-        for symbol, data in indexByDate:
-            print(f"|{symbol}"+" "*(10-len(symbol))+ f"{data["from"]}|")
-        print("----------------------")
 
     def storeData(self, dataset, ticker): #store the dataset in a json file
         fname = f"{ticker}_data.json"
@@ -59,7 +52,7 @@ class TickerData:
             fname = f"{ticker}_data.json"
             filepath = self.directory / fname
             with open(filepath,"r") as file:
-                print(f"Fetching data for {ticker} from {self.index[ticker]["from"]} ...")
+                print(f"Fetching data for {ticker} from {self.index[ticker]['from']} ...")
                 dataset = json.load(file)
         else:
             print(f"Error no cached data for {ticker}")
@@ -70,12 +63,20 @@ class TickerData:
         return max(dataset.keys())
 
     def updateIndex(self, dataset ,ticker):
-        self.index[ticker] = {'from' : self.getDate(dataset),
-                             'signal' : analyze(dataset)}
+        date = self.getDate(dataset)
+        self.index[ticker] = {'from' : date,
+                             'signal' : analyze(dataset),
+                             'close' : dataset[date]["price"],
+                             'sentiment': dataset[date]["sentiment"]}
         fname = "index.json"
         filepath = self.directory / fname
         with open(filepath,"w") as file:
             json.dump(self.index, file, indent=4)
+
+    def updateIndexAll(self): #runs updateIndex on every ticker stored in index.json
+        for k in self.index.keys():
+            dataset = self.getData(k)
+            self.updateIndex(dataset, k)
 
     def signalMessage(self, ticker):
         corr = self.index[ticker]["signal"]
@@ -85,3 +86,20 @@ class TickerData:
             print("Weak Signal:", corr)
         else:
             print("Signal likely noise:", corr)
+
+    def signalString(signal):
+        ret = "-"
+        if abs(signal) > 0.2:
+            ret = "Strong"
+        elif abs(signal) > 0.1:
+            ret = "Weak"
+        else:
+            ret = "Likely Noise"
+        return ret
+
+    def printCachedTickers(self):
+        print("\n---[Cached Tickers]---")
+        indexByDate = sorted(self.index.items(), key=lambda x: x[1]['from'],reverse=True)
+        for symbol, data in indexByDate:
+            print(f"|{symbol}"+" "*(10-len(symbol))+ f"{data['from']}|")
+        print("----------------------")
