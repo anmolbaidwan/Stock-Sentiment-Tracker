@@ -13,33 +13,36 @@ class AlphaVantageClient:
         self.api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
         self.base_url = "https://www.alphavantage.co/query"
         past = datetime.now() + relativedelta(months=-3) #set search date to 3 months ago
+        self.today = (datetime.now() + relativedelta(days=-1)).strftime('%Y-%m-%d')
         self.searchDate = past.strftime('%Y%m%d') + "T0000"
 
         
-    def call_api(self, params, type):
+    def call_api(self, symbol):
         #helper to handle the 1-second delay and the request.
-        response = requests.get(self.base_url, params=params).json()
-        time.sleep(1.1) 
-        if 'Error Message' in response:
-            raise ValueError("Invalid Ticker Provided")
-
-        if 'Information' in response:
+        newparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "limit":1000}
+        oldparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "sort": "EARLIEST", "limit":1000}
+        r1 = requests.get(self.base_url, params=newparams).json()
+        time.sleep(1.1)
+        r2 = requests.get(self.base_url, params=oldparams).json()
+        if 'Information' in r1 or 'Information' in r2:
             raise RuntimeError("API Limit Reached")
-        
-        if type == 'sentiment':
-            return response['feed']
-        return response["Time Series (Daily)"]
-        
+        newfeed = r1['feed']
+        oldfeed = r2['feed']
+        feed = oldfeed + newfeed
+        return feed
 
     def get_stock_price(self, symbol):
         data = {}
         ticker = yf.Ticker(symbol)
-        priceHistory = ticker.history(period = '3mo', rounding = True, timeout = None)
-        priceHistory = priceHistory.reset_index()
-        priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
-        priceHistory = priceHistory.to_dict('records')
-        for record in reversed(priceHistory):
-            data[record['Date']] = record['Close']
+        try:
+            priceHistory = ticker.history(period = '3mo', rounding = True)
+            priceHistory = priceHistory.reset_index()
+            priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
+            priceHistory = priceHistory.to_dict('records')
+            for record in reversed(priceHistory):
+                data[record['Date']] = record['Close']
+        except Exception as error:
+            raise ValueError("Ticker Not Found")
         return data
     
 
@@ -64,11 +67,7 @@ class AlphaVantageClient:
         return data
 
     def get_sentiment(self, symbol):
-        newparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "limit":1000}
-        oldparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "sort": "EARLIEST", "limit":1000}
-        newfeed = self.call_api(newparams, "sentiment")
-        oldfeed = self.call_api(oldparams, "sentiment")
-        feed = oldfeed + newfeed
+        feed = self.call_api(symbol)
         weighted_sentiment = 0
         data = {}
         for article in feed: #for each news article
