@@ -1,6 +1,7 @@
 import os
 import time
 import requests
+import yfinance as yf
 from dotenv import load_dotenv
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -31,11 +32,14 @@ class AlphaVantageClient:
         
 
     def get_stock_price(self, symbol):
-        params = {"function": "TIME_SERIES_DAILY", "symbol": symbol, "outputsize":"compact", "apikey": self.api_key}
-        prices = self.call_api(params, "stock")
         data = {}
-        for date, info in prices.items():
-            data[date] = float(info['4. close'])
+        ticker = yf.Ticker(symbol)
+        priceHistory = ticker.history(period = '3mo')
+        priceHistory = priceHistory.reset_index()
+        priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
+        priceHistory = priceHistory.to_dict('records')
+        for record in reversed(priceHistory):
+            data[record['Date']] = round(record['Close'],2)
         return data
         
 
