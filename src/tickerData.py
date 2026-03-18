@@ -87,7 +87,8 @@ class TickerData:
         else:
             print("Signal likely noise:", corr)
 
-    def signalString(signal):
+    def signalString(self, ticker):
+        signal = self.index[ticker]["signal"]
         ret = "-"
         if abs(signal) > 0.2:
             ret = "Strong"
@@ -96,6 +97,24 @@ class TickerData:
         else:
             ret = "Likely Noise"
         return ret
+
+    def sentiString(self, ticker):
+            senti = self.index[ticker]["sentiment"]
+            ret = "-"
+            if senti <= -0.35:
+                ret = "Bearish"
+            elif senti <= -0.15:
+                ret = "Somewhat Bearish"
+            elif senti < 0.15:
+                ret = "Neutral"
+            elif senti <= 0.35:
+                ret = "Somewhat Bullish"
+            else:
+                ret = "Bullish"
+            return ret
+    
+    def getPrice(self, ticker):
+        return self.index[ticker]["close"]
 
     def printCachedTickers(self):
         print("\n---[Cached Tickers]---")
