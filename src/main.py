@@ -3,12 +3,33 @@ from api_client import AlphaVantageClient
 from build import buildDataset
 from tickerData import TickerData
 
-def run():
+def run(ticker):
+    tickerData = TickerData()
+    client = AlphaVantageClient()
+    index = tickerData.index
+
+    try:
+        if ticker in index:
+            dataset = tickerData.getData(ticker)
+        else:
+            price_data = client.get_stock_price(ticker)
+            sentiment_data = client.get_sentiment(ticker)
+            build = buildDataset(price_data, sentiment_data, ticker)
+            dataset = tickerData.appendData(build, ticker)
+        return {
+            "ticker": ticker,
+            "message": tickerData.signalString(ticker),
+            "sentiment": tickerData.sentiString(ticker),
+            "price": tickerData.getPrice(ticker)
+        }
+    except Exception as error:
+        return {"error": str(error)}
+
+if __name__ == "__main__":
     print("--- Stock Sentiment & Valuation Tracker ---")
     tickerData = TickerData()
     client = AlphaVantageClient()
     tickerData.printCachedTickers()
-    # dataset = {}
     loop = ""
     while(loop != "N"):
         ticker = input("Enter a stock ticker (e.g., AAPL): ").upper()
@@ -28,7 +49,6 @@ def run():
                     tickerData.appendData(build, ticker)
             except Exception as error:
                 print("Error:", error)
-                return
         else:
             tickerData.getData(ticker)
         print("\n[Results]")
@@ -36,6 +56,3 @@ def run():
         print("Data received.")
         tickerData.signalMessage(ticker)
         loop = input("Would you like to process new data? (Y/N)").upper()
-
-if __name__ == "__main__":
-    run()

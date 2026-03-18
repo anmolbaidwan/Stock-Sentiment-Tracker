@@ -15,11 +15,11 @@ def analyze(dataset):
     y = np.array(y)
 
     #This chunk below is only needed for viewing visual graph
-    plt.scatter(x, y)
-    m, b = np.polyfit(x, y, 1)
-    plt.plot(x, m*x + b)
-    plt.xlabel("Sentiment Score")
-    plt.ylabel("Next Day Return")
+    #plt.scatter(x, y)
+    #m, b = np.polyfit(x, y, 1)
+    #plt.plot(x, m*x + b)
+    #plt.xlabel("Sentiment Score")
+    #plt.ylabel("Next Day Return")
     
     # print("Data Points:", len(x))
 
