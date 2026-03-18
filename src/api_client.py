@@ -34,12 +34,12 @@ class AlphaVantageClient:
     def get_stock_price(self, symbol):
         data = {}
         ticker = yf.Ticker(symbol)
-        priceHistory = ticker.history(period = '3mo')
+        priceHistory = ticker.history(period = '3mo', rounding = True)
         priceHistory = priceHistory.reset_index()
         priceHistory['Date'] = priceHistory['Date'].dt.strftime('%Y-%m-%d')
         priceHistory = priceHistory.to_dict('records')
         for record in reversed(priceHistory):
-            data[record['Date']] = round(record['Close'],2)
+            data[record['Date']] = record['Close']
         return data
         
 
