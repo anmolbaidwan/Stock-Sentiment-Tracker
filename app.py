@@ -32,6 +32,8 @@ def login():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
+        username = request.form.get("username")
+        session["user"] = username
         return redirect("/")
 
     return render_template("signup.html")
