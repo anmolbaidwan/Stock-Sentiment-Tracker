@@ -7,9 +7,8 @@ def run(ticker):
     tickerData = TickerData()
     client = AlphaVantageClient()
     index = tickerData.index
-
     try:
-        if ticker in index:
+        if ticker in index and client.today <= index[ticker]["from"]:
             dataset = tickerData.getData(ticker)
         else:
             price_data = client.get_stock_price(ticker)
