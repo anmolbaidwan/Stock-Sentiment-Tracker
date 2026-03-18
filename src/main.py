@@ -13,7 +13,8 @@ def run(ticker):
         else:
             price_data = client.get_stock_price(ticker)
             sentiment_data = client.get_sentiment(ticker)
-            build = buildDataset(price_data, sentiment_data, ticker)
+            recommendation_data = client.get_recommend_scores(ticker)
+            build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
             dataset = tickerData.appendData(build, ticker)
         return {
             "ticker": ticker,
