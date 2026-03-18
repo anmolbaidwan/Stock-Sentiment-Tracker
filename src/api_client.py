@@ -16,19 +16,15 @@ class AlphaVantageClient:
         self.searchDate = past.strftime('%Y%m%d') + "T0000"
 
         
-    def call_api(self, params, type):
+    def call_api(self, params):
         #helper to handle the 1-second delay and the request.
         response = requests.get(self.base_url, params=params).json()
         time.sleep(1.1) 
-        if 'Error Message' in response:
-            raise ValueError("Ticker Not Found")
 
         if 'Information' in response:
+            print(response)
             raise RuntimeError("API Limit Reached")
-        
-        if type == 'sentiment':
-            return response['feed']
-        return response["Time Series (Daily)"]
+        return response['feed']
         
 
     def get_stock_price(self, symbol):
@@ -49,8 +45,8 @@ class AlphaVantageClient:
     def get_sentiment(self, symbol):
         newparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "limit":1000}
         oldparams = {"function": "NEWS_SENTIMENT", "tickers": symbol, "apikey": self.api_key, "time_from": self.searchDate, "sort": "EARLIEST", "limit":1000}
-        newfeed = self.call_api(newparams, "sentiment")
-        oldfeed = self.call_api(oldparams, "sentiment")
+        newfeed = self.call_api(newparams)
+        oldfeed = self.call_api(oldparams)
         feed = oldfeed + newfeed
         weighted_sentiment = 0
         data = {}
