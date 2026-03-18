@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 import sys
 import os
+import json
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 import main
 
@@ -8,16 +9,21 @@ app = Flask(__name__)
 app.secret_key = "dev"
 
 users = {}
+stocks = []
+with open("company_tickers.json","r") as file:
+    raw = json.load(file)
+
+for value in raw.values():
+    stocks.append({"ticker": value["ticker"], "name": value["title"]})
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
-
     if request.method == "POST":
         ticker = request.form.get("ticker").upper()
         result = main.run(ticker)
 
-    return render_template("index.html", result=result, user=session.get("user"))
+    return render_template("index.html", result=result, stocks=stocks, user=session.get("user"))
 
 
 @app.route("/login", methods=["GET", "POST"])

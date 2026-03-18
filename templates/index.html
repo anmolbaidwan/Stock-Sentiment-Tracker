@@ -86,6 +86,21 @@ a {
     font-size: large;
 }
 .error { color: red; }
+
+#suggestions {
+    background: #111;
+    border: 1px solid #333;
+    width: 220px;
+}
+
+#suggestions div {
+    padding: 5px;
+    cursor:pointer;
+}
+
+#suggestions div:hover {
+    background: #222;
+}
 </style>
 </head>
 
@@ -108,8 +123,11 @@ a {
 
     {% if user %}
     <form method="POST" onsubmit="showLoad()">
-        <input name="ticker" placeholder="AAPL / TSLA..." required />
-        <button class="btn" type="submit">Run</button>
+        <div class="search-box">
+            <input name="ticker" id="ticker" oninput="suggest()" placeholder="AAPL / TSLA..." required />
+            <button class="btn" type="submit">Run</button>
+            <div id="suggestions"></div>
+        </div>
     </form>
     {% else %}
     <button class="bigbtn" onclick="location.href='/signup'">Sign Up</button>
@@ -131,10 +149,41 @@ a {
         </div>
     {% endif %}
 </div>
-
 <script>
+
+const STOCKS = {{stocks | tojson | safe}}
+
 function showLoad() {
     document.getElementById("load").style.display = "block";
+}
+
+function suggest() {
+    console.log("typing...")
+
+    let input = document.querySelector("input[name='ticker']").value.toUpperCase();
+    let box = document.getElementById("suggestions");
+
+    box.innerHTML = "";
+
+    if (!input) return;
+
+    let matches = STOCKS.filter(s =>
+        s.ticker.startsWith(input) ||
+        s.name.toUpperCase().includes(input)
+    ).slice(0, 5); // limit results
+
+    matches.forEach(s => {
+        let div = document.createElement("div");
+        div.innerText = `${s.ticker} - ${s.name}`;
+        div.style.cursor = "pointer";
+
+        div.onclick = () => {
+            document.querySelector("input[name='ticker']").value = s.ticker;
+            box.innerHTML = "";
+        };
+
+        box.appendChild(div);
+    });
 }
 </script>
 
