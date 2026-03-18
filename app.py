@@ -7,6 +7,7 @@ import main
 app = Flask(__name__)
 app.secret_key = "dev"
 
+users = {}
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -23,8 +24,14 @@ def index():
 def login():
     if request.method == "POST":
         username = request.form.get("username")
-        session["user"] = username
-        return redirect("/")
+        password = request.form.get("password")
+        if username not in users:
+            return render_template("login.html", dne = True)
+        elif users[username] == password:
+            session["user"] = username
+            return redirect("/")
+        else:
+            return render_template("login.html", wrong = True)
 
     return render_template("login.html")
 
@@ -33,6 +40,8 @@ def login():
 def signup():
     if request.method == "POST":
         username = request.form.get("username")
+        password = request.form.get("password")
+        users[username] = password
         session["user"] = username
         return redirect("/")
 

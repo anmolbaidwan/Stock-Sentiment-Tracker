@@ -75,10 +75,14 @@ a {
     <div>> login</div>
 
     <input name="username" placeholder="username" required>
-    <input type="password" placeholder="password">
-
+    <input type="password" name="password" placeholder="password" required>
+    {% if dne %}
+    <p>Account Does Not Exist</p>
+    {% endif %}
+    {% if wrong %}
+    <p>Wrong Password</p>
+    {% endif %}
     <button type="submit">Login</button>
-
     <a href="/signup">create account →</a>
 </form>
 </div>
