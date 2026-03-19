@@ -62,12 +62,20 @@ class TickerData:
     def getDate(self, dataset) -> str: #find most recent date in the dataset
         return max(dataset.keys())
 
+    def findSentiment(self, dataset):
+        for date in sorted(dataset.keys(), reverse=True):
+            sent = dataset[date]["sentiment"]
+            if sent != 0:
+                return sent
+        return 0
+        
+
     def updateIndex(self, dataset ,ticker):
         date = self.getDate(dataset)
         self.index[ticker] = {'from' : date,
                              'signal' : analyze(dataset),
                              'close' : dataset[date]["price"],
-                             'sentiment': dataset[date]["sentiment"],
+                             'sentiment': self.findSentiment(dataset),
                              'recommendation': dataset[date]["recommendation"]}
         fname = "index.json"
         filepath = self.directory / fname
