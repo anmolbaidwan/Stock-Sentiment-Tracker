@@ -141,10 +141,10 @@ a {
             {% if result.error %}
                 <div class="error">{{ result.error }}</div>
             {% else %}
-                <div>Results for Ticker: {{ result.ticker }}</div>
-                <div>Expert Recommendation: {{ result.recommendation }}</div><br>
+                <div style="font-size: x-large; font-weight: bold;">Results for Ticker: {{ result.ticker }}</div>
+                <div>Expert Recommendation: <span style="color: #0f0; font-weight: bolder;">{{ result.recommendation }}</span></div><br>
                 <div class="w3-light-grey">
-                    <div class="w3-green" style="height:24px;width:{{result.bar}}%"></div>
+                    <div class="w3-green" style="height:15px;width:{{result.bar}}%"></div>
                   </div><br>
                 <div>Closing Price: ${{ result.price }}</div>
                 <div>Overall Market Sentiment for {{ result.ticker }}: {{ result.sentiment }}</div>
