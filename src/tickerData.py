@@ -120,6 +120,17 @@ class TickerData:
     def getRecScore(self, ticker):
         return self.index[ticker]["recommendation"]
 
+    def getRecString(self, ticker):
+        score = self.getRecScore(ticker)
+        ret = "-"
+        if score > 0.25:
+            ret = "BUY"
+        elif score < -0.25:
+            ret = "SELL"
+        else:
+            ret = "HOLD"
+        return ret
+
     def printCachedTickers(self):
         print("\n---[Cached Tickers]---")
         indexByDate = sorted(self.index.items(), key=lambda x: x[1]['from'],reverse=True)
