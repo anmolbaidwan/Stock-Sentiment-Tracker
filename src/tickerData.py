@@ -118,7 +118,7 @@ class TickerData:
         return self.index[ticker]["close"]
     
     def getRecScore(self, ticker):
-        return self.index[ticker].get("recommendation")
+        return self.index[ticker]["recommendation"]
 
     def printCachedTickers(self):
         print("\n---[Cached Tickers]---")

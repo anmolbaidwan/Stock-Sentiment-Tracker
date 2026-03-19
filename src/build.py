@@ -22,7 +22,7 @@ def buildDataset(price_dict, sentiment_dict, recommendation_dict, ticker):
             "price": today_price,
             "sentiment": sentiment,
             "return": daily_return,
-            "recommendation:": monthly_rec
+            "recommendation": monthly_rec
         }
 
     dates = list(dataset.keys())
