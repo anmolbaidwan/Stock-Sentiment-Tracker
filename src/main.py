@@ -20,7 +20,8 @@ def run(ticker):
             "ticker": ticker,
             "message": tickerData.signalString(ticker),
             "sentiment": tickerData.sentiString(ticker),
-            "price": tickerData.getPrice(ticker)
+            "price": tickerData.getPrice(ticker),
+            "recommendation": tickerData.getRecScore(ticker)
         }
     except Exception as error:
         return {"error": str(error)}
