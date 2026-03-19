@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CSCI331 Project</title>
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 <style>
 body {
     margin: 0;
@@ -141,7 +141,11 @@ a {
             {% if result.error %}
                 <div class="error">{{ result.error }}</div>
             {% else %}
-                <div>Results for Ticker: {{ result.ticker }}</div>
+                <div style="font-size: x-large; font-weight: bold;">Results for Ticker: {{ result.ticker }}</div>
+                <div>Expert Recommendation: <span style="color: #0f0; font-weight: bolder;">{{ result.recommendation }}</span></div><br>
+                <div class="w3-light-grey">
+                    <div class="w3-green" style="height:15px;width:{{result.bar}}%"></div>
+                  </div><br>
                 <div>Closing Price: ${{ result.price }}</div>
                 <div>Overall Market Sentiment for {{ result.ticker }}: {{ result.sentiment }}</div>
                 <div>The correlation between Prices and Sentiment is {{ result.message }}</div>
@@ -150,7 +154,6 @@ a {
     {% endif %}
 </div>
 <script>
-
 const STOCKS = {{stocks | tojson | safe}}
 
 function showLoad() {
