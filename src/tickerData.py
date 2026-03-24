@@ -99,12 +99,16 @@ class TickerData:
     def signalString(self, ticker):
         signal = self.index[ticker]["signal"]
         ret = "-"
-        if abs(signal) > 0.2:
-            ret = "Strong"
-        elif abs(signal) > 0.1:
-            ret = "Weak"
-        else:
+        if signal > 0.2:
+            ret = "Positive"
+        elif signal > 0.1:
+            ret = "Weakly Positive"
+        elif signal <= 0.1 and signal >= -0.1:
             ret = "Likely Noise"
+        elif signal < -0.2:
+            ret = "Negative"
+        elif signal < -0.1:
+            ret = "Weakly Negative"
         return ret
 
     def sentiString(self, ticker):
