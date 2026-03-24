@@ -126,17 +126,21 @@ class TickerData:
         return self.index[ticker]["close"]
     
     def getRecScore(self, ticker):
-        return self.index[ticker]["recommendation"]
+        recScore = self.index[ticker]["recommendation"]
+        if recScore is None:
+            recScore = -1
+        return recScore
 
     def getRecString(self, ticker):
-        score = self.getRecScore(ticker)
-        ret = "-"
-        if score > 0.25:
-            ret = "BUY"
-        elif score < -0.25:
-            ret = "SELL"
-        else:
-            ret = "HOLD"
+        score = self.index[ticker]["recommendation"]
+        ret = "N/A"
+        if score is not None:
+            if score > 0.25:
+                ret = "BUY"
+            elif score < -0.25:
+                ret = "SELL"
+            else:
+                ret = "HOLD"
         return ret
 
     def printCachedTickers(self):
