@@ -57,6 +57,11 @@ if __name__ == "__main__":
             tickerData.getData(ticker)
         print("\n[Results]")
         print(f"Ticker: {ticker}")
-        print("Data received.")
-        tickerData.signalMessage(ticker)
+        print(f"price: {tickerData.getPrice(ticker)}")
+        print(f"expert recommendation: {tickerData.getRecString(ticker)}")
+        barwidth = 30
+        bar = int(((tickerData.getRecScore(ticker) + 1)/2)*barwidth)
+        print(("["+"■"*bar)+("□"*(barwidth-bar))+("]"))
+        print(f"sentiment: {tickerData.sentiString(ticker)}")
+        print(f"sentiment signal: {tickerData.signalString(ticker)}")
         loop = input("Would you like to process new data? (Y/N)").upper()
