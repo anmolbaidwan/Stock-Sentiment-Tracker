@@ -13,7 +13,7 @@ class AlphaVantageClient:
         self.api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
         self.base_url = "https://www.alphavantage.co/query"
         past = datetime.now() + relativedelta(months=-3) #set search date to 3 months ago
-        self.today = (datetime.now() + relativedelta(days=-1)).strftime('%Y-%m-%d')
+        self.yesterday = (datetime.now() + relativedelta(days=-1)).strftime('%Y-%m-%d')
         self.searchDate = past.strftime('%Y%m%d') + "T0000"
 
         
