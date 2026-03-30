@@ -149,8 +149,8 @@ a {
             {% if result.error %}
                 <div class="error">{{ result.error }}</div>
             {% else %}
-                <div style="font-size: x-large; font-weight: bold;">Results for Ticker: {{ result.ticker }}</div>
-                <div style = "scale: 0.7; margin-top: -50px;margin-bottom: -50px;">{{chart | safe}}</div>
+                <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }}</div>
+                <div style = "scale: 0.8; margin-top: -30px;margin-bottom: -30px;">{{chart | safe}}</div>
                 <div>Expert Recommendation: <span style="color: #0f0; font-weight: bolder;">{{ result.recommendation }}</span></div><br>
                 <div class="w3-light-grey">
                     <div class="w3-green" style="height:15px;width:{{result.bar}}%"></div>
@@ -161,8 +161,8 @@ a {
             {% endif %}
         </div>
     {% endif %}
-    <div class = "disclaimer">Disclaimer:<br>This content is for education only and is not financial advice. Do your own research.</div>
 </div>
+<div class = "disclaimer">Disclaimer:<br>This content is for education only<br> and is not financial advice. Do your own research.</div>
 <script>
 const STOCKS = {{stocks | tojson | safe}}
 

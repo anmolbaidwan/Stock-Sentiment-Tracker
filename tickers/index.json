@@ -61,5 +61,12 @@
         "close": 246.97,
         "sentiment": 0.11344247983161364,
         "recommendation": 0.3541666666666667
+    },
+    "IAU": {
+        "from": "2026-03-30",
+        "signal": 0.17251687866796303,
+        "close": 84.68,
+        "sentiment": 0.006653821347499999,
+        "recommendation": null
     }
 }

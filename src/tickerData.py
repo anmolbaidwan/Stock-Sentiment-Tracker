@@ -161,7 +161,7 @@ class TickerData:
         prices = []
         sentiment = []
         for date, d in dataset.items():
-            dates.append(pd.to_datetime(date))
+            dates.append(date)
             prices.append(d["price"])
             sentiment.append(d["recommendation"])
         fig = go.Figure()
