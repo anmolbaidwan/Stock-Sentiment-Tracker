@@ -23,7 +23,8 @@ def index():
     if request.method == "POST":
         ticker = request.form.get("ticker").upper()
         result = main.run(ticker)
-        chart = result["chart"]
+        if "error" not in result:
+            chart = result["chart"]
 
     return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
 

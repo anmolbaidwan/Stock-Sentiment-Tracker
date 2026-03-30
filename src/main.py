@@ -3,9 +3,10 @@ from api_client import AlphaVantageClient
 from build import buildDataset
 from tickerData import TickerData
 
+tickerData = TickerData()
+client = AlphaVantageClient()
+
 def run(ticker):
-    tickerData = TickerData()
-    client = AlphaVantageClient()
     index = tickerData.index
     try:
         if ticker in index and client.yesterday <= index[ticker]["from"]:
@@ -31,8 +32,6 @@ def run(ticker):
 
 if __name__ == "__main__":
     print("--- Stock Sentiment & Valuation Tracker ---")
-    tickerData = TickerData()
-    client = AlphaVantageClient()
     tickerData.printCachedTickers()
     loop = ""
     while(loop != "N"):
