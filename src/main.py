@@ -16,14 +16,15 @@ def run(ticker):
             recommendation_data = client.get_recommend_scores(ticker)
             build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
             dataset = tickerData.appendData(build, ticker)
+        chart = tickerData.getChart(ticker, dataset=tickerData.getData(ticker))
         return {
             "ticker": ticker,
             "message": tickerData.signalString(ticker),
             "sentiment": tickerData.sentiString(ticker),
             "price": tickerData.getPrice(ticker),
             "bar": ((tickerData.getRecScore(ticker) + 1)/2)*100,
-            "recommendation": tickerData.getRecString(ticker)
-
+            "recommendation": tickerData.getRecString(ticker),
+            "chart": chart
         }
     except Exception as error:
         return {"error": str(error)}

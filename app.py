@@ -19,11 +19,13 @@ for value in raw.values():
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
+    chart = None
     if request.method == "POST":
         ticker = request.form.get("ticker").upper()
         result = main.run(ticker)
+        chart = result["chart"]
 
-    return render_template("index.html", result=result, stocks=stocks, user=session.get("user"))
+    return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
 
 
 @app.route("/login", methods=["GET", "POST"])

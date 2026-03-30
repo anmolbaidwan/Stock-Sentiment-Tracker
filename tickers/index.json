@@ -1,16 +1,65 @@
 {
-    "AAPL": {
-        "from": "2026-03-18",
-        "signal": -0.02021848660821945,
-        "close": 249.94,
-        "sentiment": 0.16574360057636842,
-        "recommendation": 0.3541666666666667
-    },
     "ORCL": {
         "from": "2026-03-18",
         "signal": 0.3006944850082538,
         "close": 152.9,
         "sentiment": 0.23104139024377776,
         "recommendation": 0.4659090909090909
+    },
+    "BA": {
+        "from": "2026-03-26",
+        "signal": 0.31819412876579134,
+        "close": 194.36,
+        "sentiment": 0.1809889592874857,
+        "recommendation": 0.4423076923076923
+    },
+    "LNAI": {
+        "from": "2026-03-26",
+        "signal": -0.018320625972923867,
+        "close": 0.494,
+        "sentiment": 0.6069175,
+        "recommendation": null
+    },
+    "UUGRY": {
+        "from": "2026-03-30",
+        "signal": NaN,
+        "close": 34.74,
+        "sentiment": 0,
+        "recommendation": 1.0
+    },
+    "TSLA": {
+        "from": "2026-03-30",
+        "signal": 0.16386025415282413,
+        "close": 357.58,
+        "sentiment": -0.008972305040473682,
+        "recommendation": 0.1875
+    },
+    "MLP": {
+        "from": "2026-03-30",
+        "signal": -0.1253676343988805,
+        "close": 15.28,
+        "sentiment": 0.094825375,
+        "recommendation": null
+    },
+    "GOOG": {
+        "from": "2026-03-30",
+        "signal": 0.0068389563856081385,
+        "close": 273.53,
+        "sentiment": 0.046639959571028566,
+        "recommendation": 0.5514705882352942
+    },
+    "GOOGL": {
+        "from": "2026-03-30",
+        "signal": 0.3169887696682741,
+        "close": 273.84,
+        "sentiment": 0.03414049889460345,
+        "recommendation": 0.5447761194029851
+    },
+    "AAPL": {
+        "from": "2026-03-30",
+        "signal": 0.05455468074859508,
+        "close": 246.97,
+        "sentiment": 0.11344247983161364,
+        "recommendation": 0.3541666666666667
     }
 }

@@ -1,0 +1,429 @@
+{
+    "2025-12-31": {
+        "price": 32.18,
+        "sentiment": 0,
+        "return": -0.00617665225447816,
+        "recommendation": null,
+        "next_return": 0.009944064636420146
+    },
+    "2026-01-02": {
+        "price": 32.5,
+        "sentiment": 0,
+        "return": 0.009944064636420146,
+        "recommendation": null,
+        "next_return": 0.005846153846153776
+    },
+    "2026-01-05": {
+        "price": 32.69,
+        "sentiment": 0,
+        "return": 0.005846153846153776,
+        "recommendation": null,
+        "next_return": 0.007341694707861793
+    },
+    "2026-01-06": {
+        "price": 32.93,
+        "sentiment": 0,
+        "return": 0.007341694707861793,
+        "recommendation": null,
+        "next_return": 0.0024293956878226023
+    },
+    "2026-01-07": {
+        "price": 33.01,
+        "sentiment": 0,
+        "return": 0.0024293956878226023,
+        "recommendation": null,
+        "next_return": 0.008179339594062501
+    },
+    "2026-01-08": {
+        "price": 33.28,
+        "sentiment": 0,
+        "return": 0.008179339594062501,
+        "recommendation": null,
+        "next_return": -0.0015024038461539742
+    },
+    "2026-01-09": {
+        "price": 33.23,
+        "sentiment": 0,
+        "return": -0.0015024038461539742,
+        "recommendation": null,
+        "next_return": -0.014745711706289345
+    },
+    "2026-01-12": {
+        "price": 32.74,
+        "sentiment": 0,
+        "return": -0.014745711706289345,
+        "recommendation": null,
+        "next_return": -0.019547953573610277
+    },
+    "2026-01-13": {
+        "price": 32.1,
+        "sentiment": 0,
+        "return": -0.019547953573610277,
+        "recommendation": null,
+        "next_return": 0.004672897196261638
+    },
+    "2026-01-14": {
+        "price": 32.25,
+        "sentiment": 0,
+        "return": 0.004672897196261638,
+        "recommendation": null,
+        "next_return": 0.011472868217054184
+    },
+    "2026-01-15": {
+        "price": 32.62,
+        "sentiment": 0,
+        "return": 0.011472868217054184,
+        "recommendation": null,
+        "next_return": 0.0030656039239730665
+    },
+    "2026-01-16": {
+        "price": 32.72,
+        "sentiment": 0,
+        "return": 0.0030656039239730665,
+        "recommendation": null,
+        "next_return": -0.004278728606356985
+    },
+    "2026-01-20": {
+        "price": 32.58,
+        "sentiment": 0,
+        "return": -0.004278728606356985,
+        "recommendation": null,
+        "next_return": 0.001534683855125975
+    },
+    "2026-01-21": {
+        "price": 32.63,
+        "sentiment": 0,
+        "return": 0.001534683855125975,
+        "recommendation": null,
+        "next_return": -0.0015323322096231769
+    },
+    "2026-01-22": {
+        "price": 32.58,
+        "sentiment": 0,
+        "return": -0.0015323322096231769,
+        "recommendation": null,
+        "next_return": -0.0015346838551257569
+    },
+    "2026-01-23": {
+        "price": 32.53,
+        "sentiment": 0,
+        "return": -0.0015346838551257569,
+        "recommendation": null,
+        "next_return": 0.02244082385490307
+    },
+    "2026-01-26": {
+        "price": 33.26,
+        "sentiment": 0,
+        "return": 0.02244082385490307,
+        "recommendation": null,
+        "next_return": 0.027059530968129845
+    },
+    "2026-01-27": {
+        "price": 34.16,
+        "sentiment": 0,
+        "return": 0.027059530968129845,
+        "recommendation": null,
+        "next_return": 0.002927400468384117
+    },
+    "2026-01-28": {
+        "price": 34.26,
+        "sentiment": 0,
+        "return": 0.002927400468384117,
+        "recommendation": null,
+        "next_return": 0.006421482778750697
+    },
+    "2026-01-29": {
+        "price": 34.48,
+        "sentiment": 0,
+        "return": 0.006421482778750697,
+        "recommendation": null,
+        "next_return": -0.006670533642691325
+    },
+    "2026-01-30": {
+        "price": 34.25,
+        "sentiment": 0,
+        "return": -0.006670533642691325,
+        "recommendation": null,
+        "next_return": -0.006131386861313893
+    },
+    "2026-02-02": {
+        "price": 34.04,
+        "sentiment": 0,
+        "return": -0.006131386861313893,
+        "recommendation": null,
+        "next_return": 0.013513513513513539
+    },
+    "2026-02-03": {
+        "price": 34.5,
+        "sentiment": 0,
+        "return": 0.013513513513513539,
+        "recommendation": null,
+        "next_return": 0.015362318840579743
+    },
+    "2026-02-04": {
+        "price": 35.03,
+        "sentiment": 0,
+        "return": 0.015362318840579743,
+        "recommendation": null,
+        "next_return": -0.012275192691978297
+    },
+    "2026-02-05": {
+        "price": 34.6,
+        "sentiment": 0,
+        "return": -0.012275192691978297,
+        "recommendation": null,
+        "next_return": 0.005780346820809125
+    },
+    "2026-02-06": {
+        "price": 34.8,
+        "sentiment": 0,
+        "return": 0.005780346820809125,
+        "recommendation": null,
+        "next_return": -0.014080459770114797
+    },
+    "2026-02-09": {
+        "price": 34.31,
+        "sentiment": 0,
+        "return": -0.014080459770114797,
+        "recommendation": null,
+        "next_return": 0.027397260273972535
+    },
+    "2026-02-10": {
+        "price": 35.25,
+        "sentiment": 0,
+        "return": 0.027397260273972535,
+        "recommendation": null,
+        "next_return": 0.014751773049645478
+    },
+    "2026-02-11": {
+        "price": 35.77,
+        "sentiment": 0,
+        "return": 0.014751773049645478,
+        "recommendation": null,
+        "next_return": 0.02460162147050588
+    },
+    "2026-02-12": {
+        "price": 36.65,
+        "sentiment": 0,
+        "return": 0.02460162147050588,
+        "recommendation": null,
+        "next_return": 0.01173260572987721
+    },
+    "2026-02-13": {
+        "price": 37.08,
+        "sentiment": 0,
+        "return": 0.01173260572987721,
+        "recommendation": null,
+        "next_return": -0.00512405609492982
+    },
+    "2026-02-17": {
+        "price": 36.89,
+        "sentiment": 0,
+        "return": -0.00512405609492982,
+        "recommendation": null,
+        "next_return": -0.01219842775820013
+    },
+    "2026-02-18": {
+        "price": 36.44,
+        "sentiment": 0,
+        "return": -0.01219842775820013,
+        "recommendation": null,
+        "next_return": -0.010153677277716724
+    },
+    "2026-02-19": {
+        "price": 36.07,
+        "sentiment": 0,
+        "return": -0.010153677277716724,
+        "recommendation": null,
+        "next_return": 0.002495148322705747
+    },
+    "2026-02-20": {
+        "price": 36.16,
+        "sentiment": 0,
+        "return": 0.002495148322705747,
+        "recommendation": null,
+        "next_return": 0.006084070796460343
+    },
+    "2026-02-23": {
+        "price": 36.38,
+        "sentiment": 0,
+        "return": 0.006084070796460343,
+        "recommendation": null,
+        "next_return": 0.018416712479384128
+    },
+    "2026-02-24": {
+        "price": 37.05,
+        "sentiment": 0,
+        "return": 0.018416712479384128,
+        "recommendation": null,
+        "next_return": 0.007017543859649262
+    },
+    "2026-02-25": {
+        "price": 37.31,
+        "sentiment": 0,
+        "return": 0.007017543859649262,
+        "recommendation": null,
+        "next_return": 0.00026802465826850736
+    },
+    "2026-02-26": {
+        "price": 37.32,
+        "sentiment": 0,
+        "return": 0.00026802465826850736,
+        "recommendation": null,
+        "next_return": 0.0056270096463022735
+    },
+    "2026-02-27": {
+        "price": 37.53,
+        "sentiment": 0,
+        "return": 0.0056270096463022735,
+        "recommendation": null,
+        "next_return": -0.0058619770849986375
+    },
+    "2026-03-02": {
+        "price": 37.31,
+        "sentiment": 0,
+        "return": -0.0058619770849986375,
+        "recommendation": 1.0,
+        "next_return": -0.03189493433395885
+    },
+    "2026-03-03": {
+        "price": 36.12,
+        "sentiment": 0,
+        "return": -0.03189493433395885,
+        "recommendation": 1.0,
+        "next_return": 0.010520487264673382
+    },
+    "2026-03-04": {
+        "price": 36.5,
+        "sentiment": 0,
+        "return": 0.010520487264673382,
+        "recommendation": 1.0,
+        "next_return": -0.004657534246575389
+    },
+    "2026-03-05": {
+        "price": 36.33,
+        "sentiment": 0,
+        "return": -0.004657534246575389,
+        "recommendation": 1.0,
+        "next_return": -0.008532892925956378
+    },
+    "2026-03-06": {
+        "price": 36.02,
+        "sentiment": 0,
+        "return": -0.008532892925956378,
+        "recommendation": 1.0,
+        "next_return": -0.013603553581343752
+    },
+    "2026-03-09": {
+        "price": 35.53,
+        "sentiment": 0,
+        "return": -0.013603553581343752,
+        "recommendation": 1.0,
+        "next_return": -0.006191950464396252
+    },
+    "2026-03-10": {
+        "price": 35.31,
+        "sentiment": 0,
+        "return": -0.006191950464396252,
+        "recommendation": 1.0,
+        "next_return": 0.012461059190031088
+    },
+    "2026-03-11": {
+        "price": 35.75,
+        "sentiment": 0,
+        "return": 0.012461059190031088,
+        "recommendation": 1.0,
+        "next_return": 0.00979020979020983
+    },
+    "2026-03-12": {
+        "price": 36.1,
+        "sentiment": 0,
+        "return": 0.00979020979020983,
+        "recommendation": 1.0,
+        "next_return": -0.008864265927977847
+    },
+    "2026-03-13": {
+        "price": 35.78,
+        "sentiment": 0,
+        "return": -0.008864265927977847,
+        "recommendation": 1.0,
+        "next_return": 0.009782001117943024
+    },
+    "2026-03-16": {
+        "price": 36.13,
+        "sentiment": 0,
+        "return": 0.009782001117943024,
+        "recommendation": 1.0,
+        "next_return": 0.009410462219761868
+    },
+    "2026-03-17": {
+        "price": 36.47,
+        "sentiment": 0,
+        "return": 0.009410462219761868,
+        "recommendation": 1.0,
+        "next_return": -0.03071017274472162
+    },
+    "2026-03-18": {
+        "price": 35.35,
+        "sentiment": 0,
+        "return": -0.03071017274472162,
+        "recommendation": 1.0,
+        "next_return": -0.01442715700141437
+    },
+    "2026-03-19": {
+        "price": 34.84,
+        "sentiment": 0,
+        "return": -0.01442715700141437,
+        "recommendation": 1.0,
+        "next_return": -0.04104477611940318
+    },
+    "2026-03-20": {
+        "price": 33.41,
+        "sentiment": 0,
+        "return": -0.04104477611940318,
+        "recommendation": 1.0,
+        "next_return": 0.012870398084406072
+    },
+    "2026-03-23": {
+        "price": 33.84,
+        "sentiment": 0,
+        "return": 0.012870398084406072,
+        "recommendation": 1.0,
+        "next_return": -0.010342789598108788
+    },
+    "2026-03-24": {
+        "price": 33.49,
+        "sentiment": 0,
+        "return": -0.010342789598108788,
+        "recommendation": 1.0,
+        "next_return": 0.026575097043893714
+    },
+    "2026-03-25": {
+        "price": 34.38,
+        "sentiment": 0,
+        "return": 0.026575097043893714,
+        "recommendation": 1.0,
+        "next_return": -0.009307737056428164
+    },
+    "2026-03-26": {
+        "price": 34.06,
+        "sentiment": 0,
+        "return": -0.009307737056428164,
+        "recommendation": 1.0,
+        "next_return": -0.0005871990604815949
+    },
+    "2026-03-27": {
+        "price": 34.04,
+        "sentiment": 0,
+        "return": -0.0005871990604815949,
+        "recommendation": 1.0,
+        "next_return": 0.02056404230317282
+    },
+    "2026-03-30": {
+        "price": 34.74,
+        "sentiment": 0,
+        "return": 0.02056404230317282,
+        "recommendation": 1.0,
+        "next_return": null
+    }
+}

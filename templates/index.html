@@ -38,12 +38,11 @@ body {
 }
 
 .center {
-    height: 85vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: center;   /* keep horizontal centering */
     gap: 15px;
+    padding-top: 30px;     /* space from top */
 }
 
 input {
@@ -101,8 +100,17 @@ a {
 #suggestions div:hover {
     background: #222;
 }
+
+.disclaimer {
+    position: fixed;
+    bottom: 0;  
+    left: 0;     
+    margin: 10px;  
+    padding: 5px;   
+    color: white;   
+    font-size: x-small;
+}
 </style>
-</head>
 
 <body>
 
@@ -142,6 +150,7 @@ a {
                 <div class="error">{{ result.error }}</div>
             {% else %}
                 <div style="font-size: x-large; font-weight: bold;">Results for Ticker: {{ result.ticker }}</div>
+                <div style = "scale: 0.7; margin-top: -50px;margin-bottom: -50px;">{{chart | safe}}</div>
                 <div>Expert Recommendation: <span style="color: #0f0; font-weight: bolder;">{{ result.recommendation }}</span></div><br>
                 <div class="w3-light-grey">
                     <div class="w3-green" style="height:15px;width:{{result.bar}}%"></div>
@@ -152,6 +161,7 @@ a {
             {% endif %}
         </div>
     {% endif %}
+    <div class = "disclaimer">Disclaimer:<br>This content is for education only and is not financial advice. Do your own research.</div>
 </div>
 <script>
 const STOCKS = {{stocks | tojson | safe}}

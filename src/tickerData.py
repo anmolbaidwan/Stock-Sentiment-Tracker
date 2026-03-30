@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 from tickerAnalysis import analyze
+import yfinance as yf
+import plotly.graph_objs as go
 
 class TickerData:
     def __init__(self):
@@ -153,3 +155,32 @@ class TickerData:
         for symbol, data in indexByDate:
             print(f"|{symbol}"+" "*(10-len(symbol))+ f"{data['from']}|")
         print("----------------------")
+
+    def getChart(self, ticker, dataset):
+        dates = []
+        prices = []
+        sentiment = []
+        for date, d in dataset.items():
+            dates.append(pd.to_datetime(date))
+            prices.append(d["price"])
+            sentiment.append(d["recommendation"])
+        fig = go.Figure()
+
+        fig.add_trace(go.Scatter(
+            x=dates,
+            y=prices,
+            mode="lines",
+            name="Price",
+            line=dict(color="cyan") 
+        ))
+
+        fig.update_layout(
+            title=f"{ticker} Price & Expert Recommendation",
+            xaxis_title="Date",
+            yaxis_title="Price",
+            legend=dict(title="Legend"),
+            template="plotly_dark",
+            autosize = True,
+            margin=dict(l=40, r=40, t=50, b=40)
+        )
+        return fig.to_html(full_html=False)
