@@ -5,58 +5,70 @@
 <title>CSCI331 Project</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 <style>
+:root {
+    --bg: #0a0a0a;
+    --bg-alt: #111;
+    --text: #e5e5e5;
+    --accent: #0f0;
+    --border: #222;
+    --input-border: #333;
+}
+
+body.light-mode {
+    --bg: #d3d3d3;    
+    --bg-alt: #bebebe;
+    --text: #000080;    
+    --accent: #000080;
+    --border: #999;
+    --input-border: #888;
+}
+
 body {
     margin: 0;
     font-family: monospace;
-    background: #0a0a0a;
-    color: #e5e5e5;
+    background: var(--bg);
+    color: var(--text);
     font-size: large;
+    transition: background 0.3s, color 0.3s;
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
     padding: 15px 30px;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border);
 }
 
-.btn {
-    background: #111;
-    color: #0f0;
-    border: 1px solid #0f0;
+.btn, .bigbtn {
+    background: var(--bg-alt);
+    color: var(--accent);
+    border: 1px solid var(--accent);
     padding: 6px 12px;
     cursor: pointer;
 }
 
-.bigbtn {
-    background: #111;
-    color: #0f0;
-    border: 1px solid #0f0;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: small;
-}
+.bigbtn { font-size: small; }
 
 .center {
     display: flex;
     flex-direction: column;
-    align-items: center;   /* keep horizontal centering */
+    align-items: center;
     gap: 15px;
-    padding-top: 30px;     /* space from top */
+    padding-top: 30px;
 }
 
 input {
     padding: 10px;
     width: 220px;
-    background: #111;
-    border: 1px solid #333;
-    color: white;
+    background: var(--bg-alt);
+    border: 1px solid var(--input-border);
+    color: var(--text);
 }
 
 .load {
     width: 220px;
     height: 4px;
-    background: #111;
+    background: var(--bg-alt);
     overflow: hidden;
     display: none;
 }
@@ -64,14 +76,18 @@ input {
 .bar {
     width: 40%;
     height: 100%;
-    background: #0f0;
+    background: var(--accent);
     animation: move 2s linear infinite;
 }
 
 a {
-    color: #0f0;
+    color: var(--accent);
     text-decoration: none;
-    font-size: 12px;
+    font-size: 18px;
+}
+
+.w3-green, .w3-hover-green:hover {
+    background-color: var(--accent) !important;
 }
 
 @keyframes move {
@@ -86,9 +102,17 @@ a {
 }
 .error { color: red; }
 
+.search-box {
+    position: relative;
+    display: inline-block; 
+}
+
 #suggestions {
-    background: #111;
-    border: 1px solid #333;
+    position: absolute; 
+    z-index: 1000;    
+    top: 100%;     
+    background: var(--bg-alt);
+    border: 1px solid var(--input-border);
     width: 220px;
 }
 
@@ -98,7 +122,7 @@ a {
 }
 
 #suggestions div:hover {
-    background: #222;
+    background: var(--border);
 }
 
 .disclaimer {
@@ -107,10 +131,59 @@ a {
     left: 0;     
     margin: 10px;  
     padding: 5px;   
-    color: white;   
+    color: var(--text);   
     font-size: x-small;
 }
+
+.theme-switch-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+.switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 50px;
+}
+.switch input { display:none; }
+.slider {
+    background-color: #333;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border: 1px solid var(--accent);
+    border-radius: 34px;
+}
+.slider:before {
+    background-color: var(--accent);
+    bottom: 3px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+    border-radius: 50%;
+}
+
+
+input:checked + .slider { background-color: #fff; }
+input:checked + .slider:before { transform: translateX(24px); }
+input::placeholder {
+    color: var(--text);
+    opacity: 0.5;
+}
+
 </style>
+</head>
 
 <body>
 
@@ -151,7 +224,7 @@ a {
             {% else %}
                 <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }}</div>
                 <div style = "scale: 0.8; margin-top: -30px;margin-bottom: -30px;">{{chart | safe}}</div>
-                <div>Expert Recommendation: <span style="color: #0f0; font-weight: bolder;">{{ result.recommendation }}</span></div><br>
+                <div>Expert Recommendation: <span style="color: var(--accent); font-weight: bolder;">{{ result.recommendation }}</span></div><br>
                 <div class="w3-light-grey">
                     <div class="w3-green" style="height:15px;width:{{result.bar}}%"></div>
                   </div><br>
@@ -162,7 +235,16 @@ a {
         </div>
     {% endif %}
 </div>
+
 <div class = "disclaimer">Disclaimer:<br>This content is for education only<br> and is not financial advice. Do your own research.</div>
+
+<div class="theme-switch-wrapper">
+    <label class="switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider"></div>
+    </label>
+</div>
+
 <script>
 const STOCKS = {{stocks | tojson | safe}}
 
@@ -171,33 +253,84 @@ function showLoad() {
 }
 
 function suggest() {
-    console.log("typing...")
-
     let input = document.querySelector("input[name='ticker']").value.toUpperCase();
     let box = document.getElementById("suggestions");
-
     box.innerHTML = "";
-
     if (!input) return;
-
     let matches = STOCKS.filter(s =>
         s.ticker.startsWith(input) ||
         s.name.toUpperCase().includes(input)
-    ).slice(0, 5); // limit results
-
+    ).slice(0, 5); 
     matches.forEach(s => {
         let div = document.createElement("div");
         div.innerText = `${s.ticker} - ${s.name}`;
-        div.style.cursor = "pointer";
-
         div.onclick = () => {
             document.querySelector("input[name='ticker']").value = s.ticker;
             box.innerHTML = "";
         };
-
         box.appendChild(div);
     });
 }
+
+const toggleSwitch = document.querySelector('#checkbox');
+
+if (localStorage.getItem('theme') === 'light-mode') {
+    document.body.classList.add('light-mode');
+    toggleSwitch.checked = true;
+    
+    setTimeout(() => {
+        const plotDiv = document.querySelector('.plotly-graph-div');
+        if (plotDiv) {
+            Plotly.restyle(plotDiv, { 'line.color': ['#000080'] });
+            Plotly.relayout(plotDiv, {
+                'template': 'plotly_white',
+                'paper_bgcolor': 'rgba(0,0,0,0)',
+                'plot_bgcolor': 'rgba(0,0,0,0)',
+                'xaxis.gridcolor': '#bebebe',
+                'yaxis.gridcolor': '#bebebe',
+                'font.color': '#000080'
+            });
+        }
+    }, 200);
+}
+
+toggleSwitch.addEventListener('change', (e) => {
+    const isLight = e.target.checked;
+    const plotDiv = document.querySelector('.plotly-graph-div');
+
+    if (isLight) {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light-mode');
+        
+        if (plotDiv) {
+            Plotly.restyle(plotDiv, { 'line.color': ['#000080'] }); // Navy line
+            Plotly.relayout(plotDiv, {
+                'template': 'plotly_white',
+                'paper_bgcolor': 'rgba(0,0,0,0)',
+                'plot_bgcolor': 'rgba(0,0,0,0)',
+                'xaxis.gridcolor': '#bebebe',
+                'yaxis.gridcolor': '#bebebe',
+                'font.color': '#000080'
+            });
+        }
+    } else {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark-mode');
+        
+        if (plotDiv) {
+            Plotly.restyle(plotDiv, { 'line.color': ['#0f0'] }); // Neon Green line
+            Plotly.relayout(plotDiv, {
+                'template': 'plotly_dark',
+                'paper_bgcolor': 'rgba(0,0,0,0)',
+                'plot_bgcolor': 'rgba(0,0,0,0)',
+                'xaxis.gridcolor': '#333333', // Dark Gray grid
+                'yaxis.gridcolor': '#333333',
+                'font.color': '#e5e5e5'
+            });
+        }
+    }
+});
+
 
 </script>
 

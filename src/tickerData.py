@@ -171,7 +171,7 @@ class TickerData:
             y=prices,
             mode="lines",
             name="Price",
-            line=dict(color="cyan") 
+            line=dict(color="navy") 
         ))
 
         fig.update_layout(
@@ -179,7 +179,6 @@ class TickerData:
             xaxis_title="Date",
             yaxis_title="Price",
             legend=dict(title="Legend"),
-            template="plotly_dark",
             autosize = True,
             margin=dict(l=40, r=40, t=50, b=40)
         )
