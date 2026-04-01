@@ -5,3 +5,5 @@ python-dateutil
 matplotlib
 flask
 plotly
+flask-sqlalchemy 
+flask-bcrypt

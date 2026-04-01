@@ -56,16 +56,16 @@
         "recommendation": 0.5447761194029851
     },
     "AAPL": {
-        "from": "2026-03-30",
-        "signal": 0.05455468074859508,
-        "close": 246.97,
-        "sentiment": 0.11344247983161364,
+        "from": "2026-04-01",
+        "signal": 0.047337644185337535,
+        "close": 255.63,
+        "sentiment": 0.11582543012736586,
         "recommendation": 0.3541666666666667
     },
     "IAU": {
-        "from": "2026-03-30",
+        "from": "2026-04-01",
         "signal": 0.17251687866796303,
-        "close": 84.68,
+        "close": 89.68,
         "sentiment": 0.006653821347499999,
         "recommendation": null
     },
@@ -102,6 +102,34 @@
         "signal": 0.14194873629151009,
         "close": 44.52,
         "sentiment": 0.325042,
+        "recommendation": null
+    },
+    "SCHW": {
+        "from": "2026-04-01",
+        "signal": 0.03639223724757582,
+        "close": 92.36,
+        "sentiment": 0.19693560632833332,
+        "recommendation": 0.5476190476190477
+    },
+    "SCHW-PD": {
+        "from": "2026-04-01",
+        "signal": NaN,
+        "close": 24.37,
+        "sentiment": 0,
+        "recommendation": null
+    },
+    "GLD": {
+        "from": "2026-04-01",
+        "signal": -0.2037351781634364,
+        "close": 437.82,
+        "sentiment": 0.394891,
+        "recommendation": null
+    },
+    "GLDM": {
+        "from": "2026-04-01",
+        "signal": 0.07486500772148505,
+        "close": 94.3,
+        "sentiment": -0.079749,
         "recommendation": null
     }
 }

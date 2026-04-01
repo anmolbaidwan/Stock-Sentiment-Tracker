@@ -114,6 +114,8 @@ a {
     background: var(--bg-alt);
     border: 1px solid var(--input-border);
     width: 220px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 #suggestions div {
@@ -135,13 +137,21 @@ a {
     font-size: x-small;
 }
 
+/* THEME SWITCH STYLES */
 .theme-switch-wrapper {
     position: fixed;
     bottom: 20px;
     right: 20px;
     display: flex;
+    flex-direction: column; /* Stack text above slider */
     align-items: center;
     z-index: 1000;
+}
+#theme-text {
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 .switch {
     display: inline-block;
@@ -174,9 +184,9 @@ a {
     border-radius: 50%;
 }
 
-
 input:checked + .slider { background-color: #fff; }
 input:checked + .slider:before { transform: translateX(24px); }
+
 input::placeholder {
     color: var(--text);
     opacity: 0.5;
@@ -223,7 +233,9 @@ input::placeholder {
                 <div class="error">{{ result.error }}</div>
             {% else %}
                 <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }}</div>
-                <div style = "scale: 0.8; margin-top: -30px;margin-bottom: -30px;">{{chart | safe}}</div>
+                <div id="chart-container" style="scale: 0.8; margin-top: -30px;margin-bottom: -30px;">
+                    {{chart | safe}}
+                </div>
                 <div>Expert Recommendation: <span style="color: var(--accent); font-weight: bolder;">{{ result.recommendation }}</span></div><br>
                 <div class="w3-light-grey">
                     <div class="w3-green" style="height:15px;width:{{result.bar}}%"></div>
@@ -239,6 +251,7 @@ input::placeholder {
 <div class = "disclaimer">Disclaimer:<br>This content is for education only<br> and is not financial advice. Do your own research.</div>
 
 <div class="theme-switch-wrapper">
+    <div id="theme-text">Dark</div>
     <label class="switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
         <div class="slider"></div>
@@ -273,64 +286,65 @@ function suggest() {
 }
 
 const toggleSwitch = document.querySelector('#checkbox');
+const themeTextLabel = document.querySelector('#theme-text');
 
-if (localStorage.getItem('theme') === 'light-mode') {
+function applyThemeToGraph() {
+    const plotDiv = document.querySelector('.plotly-graph-div');
+    if (!plotDiv) return;
+
+    const isLight = document.body.classList.contains('light-mode');
+
+    if (isLight) {
+        Plotly.restyle(plotDiv, { 'line.color': ['#000080'] });
+        Plotly.relayout(plotDiv, {
+            'template': 'plotly_white',
+            'paper_bgcolor': 'rgba(0,0,0,0)',
+            'plot_bgcolor': 'rgba(0,0,0,0)',
+            'xaxis.gridcolor': '#bebebe',
+            'yaxis.gridcolor': '#bebebe',
+            'font.color': '#000080'
+        });
+    } else {
+        Plotly.restyle(plotDiv, { 'line.color': ['#0f0'] }); // Neon Green
+        Plotly.relayout(plotDiv, {
+            'template': 'plotly_dark',
+            'paper_bgcolor': 'rgba(0,0,0,0)',
+            'plot_bgcolor': 'rgba(0,0,0,0)',
+            'xaxis.gridcolor': '#333333', // Dark Gray Grid
+            'yaxis.gridcolor': '#333333',
+            'font.color': '#e5e5e5'
+        });
+    }
+}
+
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'light-mode') {
     document.body.classList.add('light-mode');
     toggleSwitch.checked = true;
-    
-    setTimeout(() => {
-        const plotDiv = document.querySelector('.plotly-graph-div');
-        if (plotDiv) {
-            Plotly.restyle(plotDiv, { 'line.color': ['#000080'] });
-            Plotly.relayout(plotDiv, {
-                'template': 'plotly_white',
-                'paper_bgcolor': 'rgba(0,0,0,0)',
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                'xaxis.gridcolor': '#bebebe',
-                'yaxis.gridcolor': '#bebebe',
-                'font.color': '#000080'
-            });
-        }
-    }, 200);
+    themeTextLabel.innerText = "Light";
+} else {
+    document.body.classList.remove('light-mode');
+    toggleSwitch.checked = false;
+    themeTextLabel.innerText = "Dark";
 }
+
+setTimeout(applyThemeToGraph, 200);
 
 toggleSwitch.addEventListener('change', (e) => {
     const isLight = e.target.checked;
-    const plotDiv = document.querySelector('.plotly-graph-div');
-
+    
     if (isLight) {
         document.body.classList.add('light-mode');
         localStorage.setItem('theme', 'light-mode');
-        
-        if (plotDiv) {
-            Plotly.restyle(plotDiv, { 'line.color': ['#000080'] }); // Navy line
-            Plotly.relayout(plotDiv, {
-                'template': 'plotly_white',
-                'paper_bgcolor': 'rgba(0,0,0,0)',
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                'xaxis.gridcolor': '#bebebe',
-                'yaxis.gridcolor': '#bebebe',
-                'font.color': '#000080'
-            });
-        }
+        themeTextLabel.innerText = "Light";
     } else {
         document.body.classList.remove('light-mode');
         localStorage.setItem('theme', 'dark-mode');
-        
-        if (plotDiv) {
-            Plotly.restyle(plotDiv, { 'line.color': ['#0f0'] }); // Neon Green line
-            Plotly.relayout(plotDiv, {
-                'template': 'plotly_dark',
-                'paper_bgcolor': 'rgba(0,0,0,0)',
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                'xaxis.gridcolor': '#333333', // Dark Gray grid
-                'yaxis.gridcolor': '#333333',
-                'font.color': '#e5e5e5'
-            });
-        }
+        themeTextLabel.innerText = "Dark";
     }
+    
+    applyThemeToGraph();
 });
-
 
 </script>
 
