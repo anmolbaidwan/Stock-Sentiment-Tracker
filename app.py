@@ -112,6 +112,7 @@ def update_profile():
         #if password != users[username]:
          #   return render_template("profile.html", edit=True, user=session.get("user"), email=session.get("email"), tracked=tracked, wrong=True)
         session["user"] = newusername
+        main.edit_username(session['email'], newusername)
         return render_template("profile.html", user=session.get("user"), email=session.get("email"), tracked=tracked)
 
     return render_template("profile.html", edit=True, user=session.get("user"), email=session.get("email"), tracked=tracked)

@@ -131,5 +131,12 @@
         "close": 94.3,
         "sentiment": -0.079749,
         "recommendation": null
+    },
+    "MSFT": {
+        "from": "2026-04-02",
+        "signal": -0.15882088795619742,
+        "close": 371.12,
+        "sentiment": 0.11056558005243014,
+        "recommendation": 0.5603448275862069
     }
 }

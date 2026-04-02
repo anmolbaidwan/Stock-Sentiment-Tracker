@@ -60,6 +60,9 @@ def track_ticker(email, ticker):
 def untrack_ticker(email, ticker):
     profiles.remove_ticker(email, ticker)
 
+def edit_username(email, username):
+    profiles.edit_username(email, username)
+
 # ONLY FOR CLI VERSION -- DEPRICATED
 if __name__ == "__main__":
     print("--- Stock Sentiment & Valuation Tracker ---")

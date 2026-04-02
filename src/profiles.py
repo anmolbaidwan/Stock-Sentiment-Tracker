@@ -26,10 +26,12 @@ class Profiles:
             self.profiles[email] = {'username':username,
                             'password':password,
                             'tdata':{}} 
-            fname =  "profiles.json"
-            filepath = self.directory / fname
-            with open(filepath,"w") as file:
-                json.dump(self.profiles, file, indent=4)
+            self.update_profiles()
+
+    def edit_username(self, email, username):
+        if email in self.profiles:
+            self.profiles[email]['username'] = username
+            self.update_profiles()
 
     def update_profiles(self):
         fname = "profiles.json"
