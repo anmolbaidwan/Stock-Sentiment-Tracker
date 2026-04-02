@@ -31,20 +31,47 @@ class Profiles:
             with open(filepath,"w") as file:
                 json.dump(self.profiles, file, indent=4)
 
+    def update_profiles(self):
+        fname = "profiles.json"
+        filepath = self.directory / fname
+        with open(filepath,"w") as file:
+            json.dump(self.profiles, file, indent=4)
+
     def update_ticker(self, email, ticker, tdata):
         if email in self.profiles:
             self.profiles[email]['tdata'][ticker] = tdata
+            self.update_profiles()
 
-    def get_usernames():
-        pass
+    def remove_ticker(self, email, ticker):
+        if email in self.profiles:
+            self.profiles[email]['tdata'].pop(ticker)
+            self.update_profiles()
+
+    def get_users(self):
+        users = {}
+        for email in self.profiles:
+            users[self.profiles[email]['username']] = self.profiles[email]['password']
+        return users
     
+    def get_email(self, username):
+        email = ""
+        for e in self.profiles:
+            if self.profiles[e]['username'] == username:
+                email = e
+        return email
+    
+    def get_tracked(self, email):
+        tracked = set()
+        for ticker in self.profiles[email]['tdata']:
+            tracked.add(ticker)
+        return tracked
 
     def get_outdated(self): #Returns a dictionary of all profiles with list of outdated tickers and their data
         outdated = {}
         today = datetime.now().strftime('%Y-%m-%d')
-        for email in self.profiles.keys():
+        for email in self.profiles:
             tickers = []
-            for ticker in self.profiles[email]['tdata'].keys():
+            for ticker in self.profiles[email]['tdata']:
                 if self.profiles[email]['tdata'][ticker]["from"] < today:
                     tickers.append({ticker : self.profiles[email]['tdata'][ticker]})
             outdated[email] = tickers

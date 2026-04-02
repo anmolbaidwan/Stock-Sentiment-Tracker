@@ -44,6 +44,22 @@ def run(ticker):
 def signup(email, username, password):
     profiles.add_profile(email, username, password)
 
+def get_users():
+    return profiles.get_users()
+
+def get_email(username): #very jank please remove this later
+    return profiles.get_email(username)
+
+def get_tracked(email):
+    return profiles.get_tracked(email)
+
+def track_ticker(email, ticker):
+    tdata = tickerData.getIndexData(ticker)
+    profiles.update_ticker(email, ticker, tdata)
+
+def untrack_ticker(email, ticker):
+    profiles.remove_ticker(email, ticker)
+
 # ONLY FOR CLI VERSION -- DEPRICATED
 if __name__ == "__main__":
     print("--- Stock Sentiment & Valuation Tracker ---")

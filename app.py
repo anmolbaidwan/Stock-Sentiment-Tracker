@@ -9,7 +9,8 @@ import alert
 app = Flask(__name__)
 app.secret_key = "dev"
 
-users = {}
+users = main.get_users()
+print(users)
 stocks = []
 tracked = set()
 with open("company_tickers.json","r") as file:
@@ -37,6 +38,7 @@ def index():
 def save_ticker():
     ticker = request.form.get('ticker')
     tracked.add(ticker)
+    main.track_ticker(session['email'], ticker)
     print(f"Ticker {ticker} saved successfully!")
     return '', 204
 
@@ -44,6 +46,7 @@ def save_ticker():
 def unsave_ticker():
     ticker = request.form.get('ticker')
     tracked.discard(ticker)
+    main.untrack_ticker(session['email'], ticker)
     print(f"Ticker {ticker} removed successfully!")
     return '', 204
 
@@ -56,6 +59,9 @@ def login():
             return render_template("login.html", dne = True)
         elif users[username] == password:
             session["user"] = username
+            session['email'] = main.get_email(username)
+            tracked.clear()
+            tracked.update(main.get_tracked(session['email']))
             return redirect("/")
         else:
             return render_template("login.html", wrong = True)
@@ -75,6 +81,8 @@ def signup():
         try:
             alert.register_email(session["email"], session["user"])
             main.signup(email, username, password)
+            tracked.clear()
+            tracked.add(main.get_tracked(session.get('email')))
         except:
             return render_template("signup.html", errmail = True)
         return redirect("/")
@@ -85,6 +93,7 @@ def signup():
 @app.route("/logout")
 def logout():
     session.pop("user", None)
+    tracked.clear()
     return redirect("/")
 
 @app.route("/profile", methods=["GET", "POST"])
