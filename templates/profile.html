@@ -166,13 +166,15 @@ input:checked + .slider:before { transform: translateX(24px); }
 </div>
 
 <div class="center">
+
+    {% if edit %}<form class="box" method="POST">{% endif %}
     <div class="profile-box">
-        <div class="profile-header">> User Profile</div>
+        <div class="profile-header">> {{ "Edit Profile" if edit else "User Profile" }}</div>
 
         <div class="stat-row">
             <span>Username:</span>
             {% if edit %}
-            <input name="username" value="{{user}}" required>
+            <input name="username" value="{{user}}">
             {% else %}
             <span class="accent-text">{{ user if user else "Guest" }}</span>
             {% endif %}
@@ -180,11 +182,7 @@ input:checked + .slider:before { transform: translateX(24px); }
         
         <div class="stat-row">
             <span>Email:</span>
-            {% if edit %}
-            <input name="email" value="{{email}}" required>
-            {% else %}
             <span class="accent-text">{{ email if email else "Guest" }}</span>
-            {% endif %}
         </div>
 
         <div class="stat-row">
@@ -192,10 +190,19 @@ input:checked + .slider:before { transform: translateX(24px); }
             <span class="accent-text">{{ tracked if tracked else "none" }}</span>
         </div>
 
+        {% if edit %}
+        <br><br>
+        <div class="stat-row">
+        <span>Enter Password to Confirm Changes</span>
+        <input name="password" type="password" required>
+        </div>
+        {% endif %}
+
         <div style="margin-top: 30px; text-align: center;">
-            <button class="btn" onclick="location.href='/profile/edit'" style="width: 100%; ">Update Settings</button>
+            <button class="btn" onclick="location.href='/profile/edit'" style="width: 100%; ">{{ "Confirm Changes" if edit else "Edit Information" }}</button>
         </div>
     </div>
+    </form>
 </div>
 
 <div class="theme-switch-wrapper">
