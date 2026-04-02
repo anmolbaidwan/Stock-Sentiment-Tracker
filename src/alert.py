@@ -26,6 +26,7 @@ def send_alert(receiver_email, alertdata):
         pw = os.getenv("APP_PASSWORD")
         smtp.login('noreply.stocksentimenttracker@gmail.com', pw)
         smtp.send_message(msg)
+        print(f"sent msg:{content}")
 
 def register_email(re, fname):
     msg = EmailMessage()

@@ -22,7 +22,7 @@
     },
     "UUGRY": {
         "from": "2026-03-30",
-        "signal": NaN,
+        "signal": 0,
         "close": 34.74,
         "sentiment": 0,
         "recommendation": 1.0
@@ -56,10 +56,10 @@
         "recommendation": 0.5447761194029851
     },
     "AAPL": {
-        "from": "2026-04-01",
-        "signal": 0.047337644185337535,
-        "close": 255.63,
-        "sentiment": 0.11582543012736586,
+        "from": "2026-04-02",
+        "signal": 0.047337644185337556,
+        "close": 255.92,
+        "sentiment": 0.139634637633,
         "recommendation": 0.3541666666666667
     },
     "IAU": {
@@ -113,7 +113,7 @@
     },
     "SCHW-PD": {
         "from": "2026-04-01",
-        "signal": NaN,
+        "signal": 0,
         "close": 24.37,
         "sentiment": 0,
         "recommendation": null

@@ -90,7 +90,8 @@ def daily_update():
     process_alerts(pendingAlerts)
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(daily_update, trigger='cron', hour='13', minute=0, id='daily_update',replace_existing=True)
+# scheduler.add_job(daily_update, trigger='cron', hour='13', minute=0, id='daily_update',replace_existing=True)
+scheduler.add_job(daily_update, 'interval', seconds = 10)
 scheduler.start()
 
 def run(ticker):

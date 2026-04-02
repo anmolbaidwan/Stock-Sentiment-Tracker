@@ -439,5 +439,12 @@
         "return": 0.007250088655975427,
         "recommendation": 0.3541666666666667,
         "next_return": null
+    },
+    "2026-04-02": {
+        "price": 255.92,
+        "sentiment": 0.139634637633,
+        "return": 0.0011344521378554631,
+        "recommendation": 0.3541666666666667,
+        "next_return": null
     }
 }

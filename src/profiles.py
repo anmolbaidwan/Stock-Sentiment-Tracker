@@ -72,9 +72,9 @@ class Profiles:
         outdated = {}
         today = datetime.now().strftime('%Y-%m-%d')
         for email in self.profiles:
-            tickers = []
+            tickers = {}
             for ticker in self.profiles[email]['tdata']:
                 if self.profiles[email]['tdata'][ticker]["from"] < today:
-                    tickers.append({ticker : self.profiles[email]['tdata'][ticker]})
+                    tickers[ticker] = self.profiles[email]['tdata'][ticker]
             outdated[email] = tickers
         return outdated
