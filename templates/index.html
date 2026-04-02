@@ -235,7 +235,11 @@ input::placeholder {
                 <div class="error">{{ result.error }}</div>
             {% else %}
                 <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }}
-                    <button class="bigbtn" id="save-btn" onclick="toggleSave('{{ result.ticker }}')">Save</button> </div>
+                    {% if saved %}
+                    <button class="bigbtn" style="border-color: #ff4b2b; color: #ff4b2b;" if saved id="save-btn" onclick="toggleSave('{{ result.ticker }}')">Unsave</button></div>
+                    {% else %}
+                    <button class ="bigbtn" id="save-btn" onclick="toggleSave('{{ result.ticker }}')">Save</button></div>
+                    {% endif %}
                 <div id="chart-container" style="scale: 0.8; margin-top: -30px;margin-bottom: -30px;">
                     {{chart | safe}}
                 </div>

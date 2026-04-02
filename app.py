@@ -24,15 +24,18 @@ def index():
     result = None
     ticker = None
     chart = None
+    saved = False
     if request.method == "POST":
         ticker = request.form.get("ticker").upper()
+        if ticker in tracked:
+            saved = True
         result = main.run(ticker)
         if "error" not in result:
             chart = result["chart"]
         #alert.send_alert(session["email"], ticker)
 
 
-    return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
+    return render_template("index.html", result=result, stocks=stocks, chart=chart, saved=saved, user=session.get("user"))
 
 @app.route('/save_ticker', methods=['POST'])
 def save_ticker():
@@ -82,7 +85,6 @@ def signup():
             alert.register_email(session["email"], session["user"])
             main.signup(email, username, password)
             tracked.clear()
-            tracked.add(main.get_tracked(session.get('email')))
         except:
             return render_template("signup.html", errmail = True)
         return redirect("/")
