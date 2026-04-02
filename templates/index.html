@@ -234,7 +234,8 @@ input::placeholder {
             {% if result.error %}
                 <div class="error">{{ result.error }}</div>
             {% else %}
-                <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }} <button class="bigbtn">Save</button> </div>
+                <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }}
+                    <button class="bigbtn" id="save-btn" onclick="toggleSave('{{ result.ticker }}')">Save</button> </div>
                 <div id="chart-container" style="scale: 0.8; margin-top: -30px;margin-bottom: -30px;">
                     {{chart | safe}}
                 </div>
@@ -347,6 +348,34 @@ toggleSwitch.addEventListener('change', (e) => {
     
     applyThemeToGraph();
 });
+
+function toggleSave(ticker) {
+    const btn = document.getElementById('save-btn');
+    const isSaving = btn.innerText === 'Save';
+    
+    const endpoint = isSaving ? '/save_ticker' : '/unsave_ticker';
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `ticker=${ticker}`
+    })
+    .then(response => {
+        if (response.ok) {
+            if (isSaving) {
+                btn.innerText = 'Unsave';
+                btn.style.borderColor = '#ff4b2b';
+                btn.style.color = '#ff4b2b';
+            } else {
+                btn.innerText = 'Save';
+                btn.style.borderColor = 'var(--accent)';
+                btn.style.color = 'var(--accent)';
+            }
+        }
+    })
+    .catch(err => console.error("Error toggling ticker:", err));
+}
+
 
 </script>
 

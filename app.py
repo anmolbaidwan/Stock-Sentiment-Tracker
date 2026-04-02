@@ -11,7 +11,7 @@ app.secret_key = "dev"
 
 users = {}
 stocks = []
-tracked = []
+tracked = set()
 with open("company_tickers.json","r") as file:
     raw = json.load(file)
 
@@ -33,6 +33,19 @@ def index():
 
     return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
 
+@app.route('/save_ticker', methods=['POST'])
+def save_ticker():
+    ticker = request.form.get('ticker')
+    tracked.add(ticker)
+    print(f"Ticker {ticker} saved successfully!")
+    return '', 204
+
+@app.route('/unsave_ticker', methods=['POST'])
+def unsave_ticker():
+    ticker = request.form.get('ticker')
+    tracked.discard(ticker)
+    print(f"Ticker {ticker} removed successfully!")
+    return '', 204
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
