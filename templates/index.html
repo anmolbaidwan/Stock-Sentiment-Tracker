@@ -153,6 +153,7 @@ a {
     font-weight: bold;
     text-transform: uppercase;
 }
+
 .switch {
     display: inline-block;
     height: 24px;
@@ -233,7 +234,7 @@ input::placeholder {
             {% if result.error %}
                 <div class="error">{{ result.error }}</div>
             {% else %}
-                <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }}</div>
+                <div style="font-size: x-large; font-weight: bold; margin-top: -15px;">Results for Ticker: {{ result.ticker }} <button class="bigbtn">Save</button> </div>
                 <div id="chart-container" style="scale: 0.8; margin-top: -30px;margin-bottom: -30px;">
                     {{chart | safe}}
                 </div>

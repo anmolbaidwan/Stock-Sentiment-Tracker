@@ -11,6 +11,7 @@ app.secret_key = "dev"
 
 users = {}
 stocks = []
+tracked = []
 with open("company_tickers.json","r") as file:
     raw = json.load(file)
 
@@ -20,13 +21,14 @@ for value in raw.values():
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
+    ticker = None
     chart = None
     if request.method == "POST":
         ticker = request.form.get("ticker").upper()
         result = main.run(ticker)
         if "error" not in result:
             chart = result["chart"]
-        alert.send_alert(session["email"], ticker)
+        #alert.send_alert(session["email"], ticker)
 
     return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
 
@@ -56,7 +58,6 @@ def signup():
         users[username] = password
         session["user"] = username
         session["email"] = email
-        print(session["email"])
         try:
             alert.register_email(session["email"], session["user"])
         except:
@@ -73,16 +74,20 @@ def logout():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    tickers = ["AAPL", "NVDA", "IAU"]
-    tracked = ", ".join(tickers)
-    print(tracked)
+    #tickers = ["AAPL", "NVDA", "IAU"]
+    #tracked = ", ".join(tickers)
     return render_template("profile.html", user=session.get("user"), email=session.get("email"), tracked=tracked)
 
 @app.route("/profile/edit", methods=["GET", "POST"])
 def update_profile():
-    tickers = ["AAPL", "NVDA", "IAU"]
-    tracked = ", ".join(tickers)
-    print(tracked)
+    if request.method == "POST":
+        newusername = request.form.get("username")
+        password = request.form.get("password")
+        #if password != users[username]:
+         #   return render_template("profile.html", edit=True, user=session.get("user"), email=session.get("email"), tracked=tracked, wrong=True)
+        session["user"] = newusername
+        return render_template("profile.html", user=session.get("user"), email=session.get("email"), tracked=tracked)
+
     return render_template("profile.html", edit=True, user=session.get("user"), email=session.get("email"), tracked=tracked)
 
 if __name__ == "__main__":
