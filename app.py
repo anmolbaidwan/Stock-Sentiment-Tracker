@@ -4,6 +4,7 @@ import os
 import json
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 import main
+import alert
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -25,6 +26,7 @@ def index():
         result = main.run(ticker)
         if "error" not in result:
             chart = result["chart"]
+        alert.send_alert(session["email"], ticker)
 
     return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
 
@@ -48,10 +50,12 @@ def login():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
+        email = request.form.get("email")
         username = request.form.get("username")
         password = request.form.get("password")
         users[username] = password
         session["user"] = username
+        session["email"] = email
         return redirect("/")
 
     return render_template("signup.html")
