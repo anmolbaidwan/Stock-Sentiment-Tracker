@@ -26,7 +26,6 @@ def index():
         result = main.run(ticker)
         if "error" not in result:
             chart = result["chart"]
-        alert.send_alert(session["email"], ticker)
 
     return render_template("index.html", result=result, stocks=stocks, chart=chart, user=session.get("user"))
 

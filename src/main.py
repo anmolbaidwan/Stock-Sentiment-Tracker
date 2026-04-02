@@ -1,10 +1,21 @@
 import sys
+from apscheduler.schedulers.background import BackgroundScheduler
 from api_client import AlphaVantageClient
 from build import buildDataset
 from tickerData import TickerData
+from profiles import Profiles
 
+profiles = Profiles()
 tickerData = TickerData()
 client = AlphaVantageClient()
+
+
+def daily_update():
+    outdated = profiles.get_outdated()
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(daily_update, trigger='cron', hour='13', minute=0, id='daily_update',replace_existing=True)
+scheduler.start()
 
 def run(ticker):
     index = tickerData.index
@@ -30,6 +41,9 @@ def run(ticker):
     except Exception as error:
         return {"error": str(error)}
 
+
+
+# ONLY FOR CLI VERSION -- DEPRICATED
 if __name__ == "__main__":
     print("--- Stock Sentiment & Valuation Tracker ---")
     tickerData.printCachedTickers()

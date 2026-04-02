@@ -71,7 +71,6 @@ class TickerData:
                 return sent
         return 0
         
-
     def updateIndex(self, dataset ,ticker):
         date = self.getDate(dataset)
         self.index[ticker] = {'from' : date,
@@ -155,6 +154,12 @@ class TickerData:
         for symbol, data in indexByDate:
             print(f"|{symbol}"+" "*(10-len(symbol))+ f"{data['from']}|")
         print("----------------------")
+
+    def getIndexData(self, ticker):
+        data = {}
+        if ticker in self.index:
+            data = self.index[ticker]
+        return data
 
     def getChart(self, ticker, dataset):
         dates = []
