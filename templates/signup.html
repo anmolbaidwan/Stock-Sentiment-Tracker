@@ -87,6 +87,7 @@ input:checked + .slider:before { transform: translateX(24px); }
     <input name="email" placeholder="email" required>
     <input name="username" placeholder="username" required>
     <input type="password" name="password" placeholder="password" required>
+    {% if errmail %}<p>Invalid Email</p>{% endif %}
     <button type="submit">Create</button>
     <a href="/login">← back to login</a>
 </form>

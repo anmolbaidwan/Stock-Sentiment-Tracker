@@ -56,6 +56,11 @@ def signup():
         users[username] = password
         session["user"] = username
         session["email"] = email
+        print(session["email"])
+        try:
+            alert.register_email(session["email"], session["user"])
+        except:
+            return render_template("signup.html", errmail = True)
         return redirect("/")
 
     return render_template("signup.html")
@@ -66,5 +71,19 @@ def logout():
     session.pop("user", None)
     return redirect("/")
 
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    tickers = ["AAPL", "NVDA", "IAU"]
+    tracked = ", ".join(tickers)
+    print(tracked)
+    return render_template("profile.html", user=session.get("user"), email=session.get("email"), tracked=tracked)
+
+@app.route("/profile/edit", methods=["GET", "POST"])
+def update_profile():
+    tickers = ["AAPL", "NVDA", "IAU"]
+    tracked = ", ".join(tickers)
+    print(tracked)
+    return render_template("profile.html", edit=True, user=session.get("user"), email=session.get("email"), tracked=tracked)
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8080)

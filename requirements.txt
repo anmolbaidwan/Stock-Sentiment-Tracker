@@ -5,4 +5,3 @@ python-dateutil
 matplotlib
 flask
 plotly
-smtplib

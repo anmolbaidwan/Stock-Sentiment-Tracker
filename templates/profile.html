@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Profile - Quetan Inc</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<style>
+:root {
+    --bg: #0a0a0a;
+    --bg-alt: #111;
+    --text: #e5e5e5;
+    --accent: #0f0;
+    --border: #222;
+    --input-border: #333;
+}
+
+body.light-mode {
+    --bg: #d3d3d3;    
+    --bg-alt: #bebebe;
+    --text: #000080;    
+    --accent: #000080;
+    --border: #999;
+    --input-border: #888;
+}
+
+body {
+    margin: 0;
+    font-family: monospace;
+    background: var(--bg);
+    color: var(--text);
+    font-size: large;
+    transition: background 0.3s, color 0.3s;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--border);
+}
+
+.btn {
+    background: var(--bg-alt);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.profile-box {
+    width: 400px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    text-align: left;
+}
+
+.profile-header {
+    font-size: x-large;
+    border-bottom: 1px solid var(--accent);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: medium;
+}
+
+.accent-text {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.theme-switch-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+#theme-text {
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 50px;
+}
+
+input {
+    padding: 2px;
+    background: var(--bg-alt);
+    border: 1px solid var(--input-border);
+    color: var(--text);
+}
+
+input::placeholder{
+    color:var(--text)
+}
+
+.switch input { display:none; }
+.slider {
+    background-color: #333;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border: 1px solid var(--accent);
+    border-radius: 34px;
+}
+.slider:before {
+    background-color: var(--accent);
+    bottom: 3px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: #fff; }
+input:checked + .slider:before { transform: translateX(24px); }
+
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+    <div><a href="/">Quetan Inc</a></div>
+    <div>
+        {% if user %}
+            <span>> {{ user }}</span>
+            <button class="btn" onclick="location.href='/logout'">Logout</button>
+        {% else %}
+            <button class="btn" onclick="location.href='/login'">Login</button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="center">
+    <div class="profile-box">
+        <div class="profile-header">> User Profile</div>
+
+        <div class="stat-row">
+            <span>Username:</span>
+            {% if edit %}
+            <input name="username" value="{{user}}" required>
+            {% else %}
+            <span class="accent-text">{{ user if user else "Guest" }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="stat-row">
+            <span>Email:</span>
+            {% if edit %}
+            <input name="email" value="{{email}}" required>
+            {% else %}
+            <span class="accent-text">{{ email if email else "Guest" }}</span>
+            {% endif %}
+        </div>
+
+        <div class="stat-row">
+            <span>Tracked Tickers:</span>
+            <span class="accent-text">{{ tracked if tracked else "none" }}</span>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <button class="btn" onclick="location.href='/profile/edit'" style="width: 100%; ">Update Settings</button>
+        </div>
+    </div>
+</div>
+
+<div class="theme-switch-wrapper">
+    <div id="theme-text">Dark</div>
+    <label class="switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider"></div>
+    </label>
+</div>
+
+<script>
+const toggleSwitch = document.querySelector('#checkbox');
+const themeTextLabel = document.querySelector('#theme-text');
+
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'light-mode') {
+    document.body.classList.add('light-mode');
+    toggleSwitch.checked = true;
+    themeTextLabel.innerText = "Light";
+} else {
+    document.body.classList.remove('light-mode');
+    toggleSwitch.checked = false;
+    themeTextLabel.innerText = "Dark";
+}
+
+toggleSwitch.addEventListener('change', (e) => {
+    const isLight = e.target.checked;
+    
+    if (isLight) {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light-mode');
+        themeTextLabel.innerText = "Light";
+    } else {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark-mode');
+        themeTextLabel.innerText = "Dark";
+    }
+});
+</script>
+
+</body>
+</html>

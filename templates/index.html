@@ -202,6 +202,7 @@ input::placeholder {
     <div>
         {% if user %}
             <span>> {{ user }}</span>
+            <button class="btn" onclick="location.href='/profile'">Profile</button>
             <button class="btn" onclick="location.href='/logout'">Logout</button>
         {% else %}
             <button class="btn" onclick="location.href='/login'">Login</button>
