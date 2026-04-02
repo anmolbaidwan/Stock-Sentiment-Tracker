@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.secret_key = "dev"
 
 users = main.get_users()
-print(users)
 stocks = []
 tracked = set()
 with open("company_tickers.json","r") as file:

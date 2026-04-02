@@ -4,14 +4,90 @@ from api_client import AlphaVantageClient
 from build import buildDataset
 from tickerData import TickerData
 from profiles import Profiles
+from alert import process_alerts
 
 profiles = Profiles()
 tickerData = TickerData()
 client = AlphaVantageClient()
 
+def get_pending_alerts(outdated):
+    indexData = tickerData.index
+    alerts = {}
+    for email in outdated:
+        alerts[email] = []
+        for ticker in outdated[email]:
+            alertData = {'ticker':ticker,
+                        'close':0,
+                        'sent':0,
+                        'rec':0}
+            validAlert = False
+            oclose = outdated[email][ticker]['close']
+            osent = outdated[email][ticker]['sentiment']
+            orec = outdated[email][ticker]['recommendation']
+
+            uclose = indexData[ticker]['close']
+            usent = indexData[ticker]['sentiment']
+            urec = indexData[ticker]['recommendation']
+
+            dclose = (oclose - uclose)/((oclose + uclose)/2)
+            dsent = (osent - usent)/((osent + usent)/2)
+            drec = (orec - urec)/((orec + urec)/2)
+
+            if(dclose > 0.20):
+                alertData['close'] = dclose
+                validAlert = True
+            elif(dclose < -0.20):
+                alertData['close'] = dclose
+                validAlert = True
+
+            if(dsent > 0.20):
+                alertData['sent'] = dclose
+                validAlert = True
+            elif(dsent < -0.20):
+                alertData['sent'] = dclose
+                validAlert = True
+
+            if(drec > 0.20):
+                alertData['rec'] = dclose
+                validAlert = True
+            elif(drec < -0.20):
+                alertData['rec'] = dclose
+                validAlert = True
+
+            if validAlert:
+                alerts[email].append(alertData)
+        if alerts[email] == []:
+            alerts.pop(email)
+    return alerts
+
+def update_index_from_users(outdated): #updates all tickers stored by users
+    tickers = []
+    for user in outdated:
+        for ticker in outdated[user]:
+            if ticker not in tickers:
+                tickers.append(ticker)           
+    for ticker in tickers:
+        price_data = client.get_stock_price(ticker)
+        sentiment_data = client.get_sentiment(ticker)
+        recommendation_data = client.get_recommend_scores(ticker)
+        build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
+        tickerData.appendData(build, ticker)
+
+def update_alerted_users(pendingAlerts):
+    for email in pendingAlerts:
+        for alert in pendingAlerts[email]:
+            ticker = alert['ticker']
+            tdata = tickerData.getIndexData(ticker)
+            profiles.update_ticker(email, ticker, tdata)
 
 def daily_update():
     outdated = profiles.get_outdated()
+    print(f"profiles with outdated info: {outdated}")
+    update_index_from_users(outdated)
+    pendingAlerts = get_pending_alerts(outdated)
+    print(f"pending alerts: {pendingAlerts}")
+    update_alerted_users(pendingAlerts)
+    process_alerts(pendingAlerts)
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(daily_update, trigger='cron', hour='13', minute=0, id='daily_update',replace_existing=True)
