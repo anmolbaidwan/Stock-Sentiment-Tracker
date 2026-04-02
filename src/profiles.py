@@ -35,6 +35,10 @@ class Profiles:
         if email in self.profiles:
             self.profiles[email]['tdata'][ticker] = tdata
 
+    def get_usernames():
+        pass
+    
+
     def get_outdated(self): #Returns a dictionary of all profiles with list of outdated tickers and their data
         outdated = {}
         today = datetime.now().strftime('%Y-%m-%d')

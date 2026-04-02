@@ -41,7 +41,8 @@ def run(ticker):
     except Exception as error:
         return {"error": str(error)}
 
-
+def signup(email, username, password):
+    profiles.add_profile(email, username, password)
 
 # ONLY FOR CLI VERSION -- DEPRICATED
 if __name__ == "__main__":

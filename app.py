@@ -61,6 +61,7 @@ def signup():
         session["email"] = email
         try:
             alert.register_email(session["email"], session["user"])
+            main.signup(email, username, password)
         except:
             return render_template("signup.html", errmail = True)
         return redirect("/")
