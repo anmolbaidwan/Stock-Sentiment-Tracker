@@ -425,5 +425,26 @@
         "return": -0.011745847497443552,
         "recommendation": 0.1875,
         "next_return": null
+    },
+    "2026-03-31": {
+        "price": 371.75,
+        "sentiment": 0.05863595637768965,
+        "return": 0.04635780229678008,
+        "recommendation": 0.15555555555555556,
+        "next_return": 0.025581708137188946
+    },
+    "2026-04-01": {
+        "price": 381.26,
+        "sentiment": 0.03067177688924444,
+        "return": 0.025581708137188946,
+        "recommendation": 0.1875,
+        "next_return": -0.054214971410585996
+    },
+    "2026-04-02": {
+        "price": 360.59,
+        "sentiment": 0.03071887547780434,
+        "return": -0.054214971410585996,
+        "recommendation": 0.1875,
+        "next_return": null
     }
 }

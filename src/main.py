@@ -5,6 +5,8 @@ from build import buildDataset
 from tickerData import TickerData
 from profiles import Profiles
 from alert import process_alerts
+from datetime import datetime
+
 
 profiles = Profiles()
 tickerData = TickerData()
@@ -16,42 +18,46 @@ def get_pending_alerts(outdated):
     for email in outdated:
         alerts[email] = []
         for ticker in outdated[email]:
+            date = outdated[email][ticker]['from']
             alertData = {'ticker':ticker,
+                         'date':date,
                         'close':0,
                         'sent':0,
                         'rec':0}
             validAlert = False
-            oclose = outdated[email][ticker]['close']
-            osent = outdated[email][ticker]['sentiment']
-            orec = outdated[email][ticker]['recommendation']
+            oldclose = outdated[email][ticker]['close']
+            oldsent = outdated[email][ticker]['sentiment']
+            oldrec = outdated[email][ticker]['recommendation']
 
-            uclose = indexData[ticker]['close']
-            usent = indexData[ticker]['sentiment']
-            urec = indexData[ticker]['recommendation']
+            newclose = indexData[ticker]['close']
+            newsent = indexData[ticker]['sentiment']
+            newrec = indexData[ticker]['recommendation']
 
-            dclose = (oclose - uclose)/((oclose + uclose)/2)
-            dsent = (osent - usent)/((osent + usent)/2)
-            drec = (orec - urec)/((orec + urec)/2)
+            dclose = (oldclose-newclose)/abs(oldclose)
+            dsent = (oldsent-newsent)/abs(oldsent)
+            drec = 0
+            if oldrec and newrec:
+                drec = (oldrec-newrec)/abs(oldrec)
 
-            if(dclose > 0.20):
-                alertData['close'] = dclose
+            if(dclose > 0.10):
+                alertData['close'] = round(dclose,2)
                 validAlert = True
-            elif(dclose < -0.20):
-                alertData['close'] = dclose
-                validAlert = True
-
-            if(dsent > 0.20):
-                alertData['sent'] = dclose
-                validAlert = True
-            elif(dsent < -0.20):
-                alertData['sent'] = dclose
+            elif(dclose < -0.10):
+                alertData['close'] = round(dclose,2)
                 validAlert = True
 
-            if(drec > 0.20):
-                alertData['rec'] = dclose
+            if(dsent > 0.10):
+                alertData['sent'] = round(dsent,2)
                 validAlert = True
-            elif(drec < -0.20):
-                alertData['rec'] = dclose
+            elif(dsent < -0.10):
+                alertData['sent'] = round(dsent,2)
+                validAlert = True
+
+            if(drec > 0.10):
+                alertData['rec'] = round(drec,2)
+                validAlert = True
+            elif(drec < -0.10):
+                alertData['rec'] = round(drec,2)
                 validAlert = True
 
             if validAlert:
@@ -60,18 +66,17 @@ def get_pending_alerts(outdated):
             alerts.pop(email)
     return alerts
 
-def update_index_from_users(outdated): #updates all tickers stored by users
+def update_tracked_ticker(outdated): #updates track
     tickers = []
+    index = tickerData.index
+    today = datetime.now().strftime('%Y-%m-%d')
     for user in outdated:
         for ticker in outdated[user]:
             if ticker not in tickers:
                 tickers.append(ticker)           
     for ticker in tickers:
-        price_data = client.get_stock_price(ticker)
-        sentiment_data = client.get_sentiment(ticker)
-        recommendation_data = client.get_recommend_scores(ticker)
-        build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
-        tickerData.appendData(build, ticker)
+        if index[ticker]['from'] < today:
+            update_ticker(ticker)
 
 def update_alerted_users(pendingAlerts):
     for email in pendingAlerts:
@@ -82,29 +87,31 @@ def update_alerted_users(pendingAlerts):
 
 def daily_update():
     outdated = profiles.get_outdated()
-    print(f"profiles with outdated info: {outdated}")
-    update_index_from_users(outdated)
+    update_tracked_ticker(outdated)
     pendingAlerts = get_pending_alerts(outdated)
-    print(f"pending alerts: {pendingAlerts}")
     update_alerted_users(pendingAlerts)
     process_alerts(pendingAlerts)
 
-scheduler = BackgroundScheduler()
-# scheduler.add_job(daily_update, trigger='cron', hour='13', minute=0, id='daily_update',replace_existing=True)
-scheduler.add_job(daily_update, 'interval', seconds = 10)
+scheduler = BackgroundScheduler(daemon=True)
+scheduler.add_job(daily_update, trigger='cron', hour='13', minute=0, id='daily_update',replace_existing=True)
+# scheduler.add_job(daily_update, 'interval', seconds = 10,  id='daily_update', replace_existing=True)
 scheduler.start()
+
+def update_ticker(ticker):
+    if ticker:
+        price_data = client.get_stock_price(ticker)
+        sentiment_data = client.get_sentiment(ticker)
+        recommendation_data = client.get_recommend_scores(ticker)
+        build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
+        tickerData.appendData(build, ticker)
 
 def run(ticker):
     index = tickerData.index
     try:
         if ticker in index and client.yesterday <= index[ticker]["from"]:
-            dataset = tickerData.getData(ticker)
+            dataset = tickerData.getData(ticker) #doesn't do anything?
         else:
-            price_data = client.get_stock_price(ticker)
-            sentiment_data = client.get_sentiment(ticker)
-            recommendation_data = client.get_recommend_scores(ticker)
-            build = buildDataset(price_data, sentiment_data, recommendation_data, ticker)
-            dataset = tickerData.appendData(build, ticker)
+            update_ticker(ticker)
         chart = tickerData.getChart(ticker, dataset=tickerData.getData(ticker))
         return {
             "ticker": ticker,

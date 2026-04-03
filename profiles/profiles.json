@@ -1,15 +1,1 @@
-{
-    "surviv69420@gmail.com": {
-        "username": "bob",
-        "password": "anmol",
-        "tdata": {
-            "AAPL": {
-                "from": "2026-04-01",
-                "signal": 0.047337644185337535,
-                "close": 255.63,
-                "sentiment": 0.11582543012736586,
-                "recommendation": 0.3541666666666667
-            }
-        }
-    }
-}
+{}

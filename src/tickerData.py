@@ -54,7 +54,7 @@ class TickerData:
             fname = f"{ticker}_data.json"
             filepath = self.directory / fname
             with open(filepath,"r") as file:
-                print(f"Fetching data for {ticker} from {self.index[ticker]['from']} ...")
+                print(f"Loading cached data for {ticker} from {self.index[ticker]['from']} ...")
                 dataset = json.load(file)
         else:
             print(f"Error no cached data for {ticker}")

@@ -71,10 +71,12 @@ class Profiles:
     def get_outdated(self): #Returns a dictionary of all profiles with list of outdated tickers and their data
         outdated = {}
         today = datetime.now().strftime('%Y-%m-%d')
+        self.profiles = self.load_profiles()
         for email in self.profiles:
             tickers = {}
             for ticker in self.profiles[email]['tdata']:
                 if self.profiles[email]['tdata'][ticker]["from"] < today:
                     tickers[ticker] = self.profiles[email]['tdata'][ticker]
-            outdated[email] = tickers
+            if tickers:
+                outdated[email] = tickers
         return outdated
