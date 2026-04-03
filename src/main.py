@@ -128,8 +128,8 @@ def run(ticker):
 def signup(email, username, password):
     profiles.add_profile(email, username, password)
 
-def get_users():
-    return profiles.get_users()
+def has_user(username):
+    return profiles.has_user(username)
 
 def get_email(username): #very jank please remove this later
     return profiles.get_email(username)
@@ -146,6 +146,9 @@ def untrack_ticker(email, ticker):
 
 def edit_username(email, username):
     profiles.edit_username(email, username)
+
+def check_pw(username, password):
+    return profiles.check_pw(username, password)
 
 # ONLY FOR CLI VERSION -- DEPRICATED
 if __name__ == "__main__":

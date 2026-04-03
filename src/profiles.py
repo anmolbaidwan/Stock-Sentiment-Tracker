@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 import json
+import bcrypt
 
 class Profiles:
     profiles = {}
@@ -21,10 +22,23 @@ class Profiles:
                 json.dump(profiles, file, indent=4)
         return profiles
 
+    def has_user(self, username):
+        for email in self.profiles:
+            if self.profiles[email]['username'] == username:
+                return True
+        return False
+
+    def check_pw(self,username, password):
+        userAndPass = self.get_users()
+        if username in userAndPass:
+            hashed = userAndPass[username]
+            return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
+
     def add_profile(self, email, username, password):
         if email not in self.profiles:
+            hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             self.profiles[email] = {'username':username,
-                            'password':password,
+                            'password':str(hashed.decode()),
                             'tdata':{}} 
             self.update_profiles()
 

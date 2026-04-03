@@ -9,7 +9,6 @@ import alert
 app = Flask(__name__)
 app.secret_key = "dev"
 
-users = main.get_users()
 stocks = []
 tracked = set()
 with open("company_tickers.json","r") as file:
@@ -57,9 +56,9 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        if username not in users:
+        if not main.has_user(username):
             return render_template("login.html", dne = True)
-        elif users[username] == password:
+        elif main.check_pw(username, password):
             session["user"] = username
             session['email'] = main.get_email(username)
             tracked.clear()
@@ -77,14 +76,14 @@ def signup():
         email = request.form.get("email")
         username = request.form.get("username")
         password = request.form.get("password")
-        users[username] = password
         session["user"] = username
         session["email"] = email
         try:
             alert.register_email(session["email"], session["user"])
             main.signup(email, username, password)
             tracked.clear()
-        except:
+        except Exception as error:
+            print("Error:", error)
             return render_template("signup.html", errmail = True)
         return redirect("/")
 
