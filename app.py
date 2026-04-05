@@ -98,9 +98,8 @@ def logout():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    #tickers = ["AAPL", "NVDA", "IAU"]
-    #tracked = ", ".join(tickers)
-    return render_template("profile.html", user=session.get("user"), email=session.get("email"), tracked=tracked)
+    trackString = ", ".join(sorted(tracked))
+    return render_template("profile.html", user=session.get("user"), email=session.get("email"), tracked=trackString)
 
 @app.route("/profile/edit", methods=["GET", "POST"])
 def update_profile():
