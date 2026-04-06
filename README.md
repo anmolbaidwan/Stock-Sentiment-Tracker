@@ -1,2 +1,2 @@
 # Stock-Sentiment-Tracker
-Object Oriented Programing Project for CSCI 331
+Object Oriented Programming Project for CSCI 331
