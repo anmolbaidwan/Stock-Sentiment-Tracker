@@ -1,1 +1,7 @@
-{}
+{
+    "guest@guest.com": {
+        "username": "guest",
+        "password": "$2b$12$gxO.a0j3UC4AZPsj85F40easaCuVGW7J5Q/9MyIB7Rko.iDDT2t6C",
+        "tdata": {}
+    }
+}
