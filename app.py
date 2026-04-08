@@ -115,4 +115,4 @@ def update_profile():
     return render_template("profile.html", edit=True, user=session.get("user"), email=session.get("email"), tracked=tracked)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8080, use_reloader = False)
+    app.run()
