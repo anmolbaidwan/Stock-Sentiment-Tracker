@@ -3,6 +3,8 @@ import os
 from email.message import EmailMessage
 from dotenv import load_dotenv
 
+load_dotenv()
+
 def process_alerts(alerts):
     for email in alerts:
         send_alert(email, alerts[email])
